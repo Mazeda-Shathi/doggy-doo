@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group android:checkableBehavior="single">
+    <item
+        android:id="@+id/nav_home"
+        android:title="Home"
+        android:icon="@drawable/ic_baseline_home_24"
+      />
+    <item
+        android:id="@+id/nav_classify"
+        android:title="Classify"
+        android:icon="@drawable/ic_baseline_document_scanner_24"
+       />
+    <item
+        android:id="@+id/nav_petCare"
+        android:title="Pet Care"
+        android:icon="@drawable/ic_baseline_pets_24"></item>
+
+    <item
+        android:id="@+id/nav_Blog"
+        android:title="Blog"
+        android:icon="@drawable/ic_baseline_content_paste_24"></item>
+
+</group>
+    <group android:checkableBehavior="single">
+        <item android:title="Profile">
+        <menu>
+            <item
+                android:id="@+id/nav_prfoile"
+                android:title="Profile"
+                 android:icon="@drawable/ic_baseline_person_24"
+                />
+            <item
+                android:id="@+id/nav_logOut"
+                android:title="Log Out"
+                android:icon="@drawable/ic_baseline_logout_24"
+                />
+        </menu>
+        </item>
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item android:id="@+id/aboutUs"
+                android:title="About Us"
+                android:icon="@drawable/ic_baseline_people_alt_24">
+
+            </item>
+
+            <item android:id="@+id/rateUS"
+                android:title="Rate Us"
+                android:icon="@drawable/ic_baseline_star_rate_24">
+
+            </item>
+        </menu>
+    </item>
+</menu>
