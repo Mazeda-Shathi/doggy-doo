@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ public class Signup extends AppCompatActivity {
     TextView  gotolog;
     FirebaseDatabase rootnode;
     DatabaseReference reference;
+    DatePickerDialog.OnDateSetListener setListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +37,7 @@ public class Signup extends AppCompatActivity {
 
 
 
-        datepicker=findViewById(R.id.regdob);
-        final Calendar calendar=Calendar.getInstance();
+
 
         //sign up section
         inputName=findViewById(R.id.regName);
@@ -46,32 +48,38 @@ public class Signup extends AppCompatActivity {
 
         btnregSubmit=findViewById(R.id.btnRegSub);
         gotolog=findViewById(R.id.btngotoLog);
+         //for date
+        datepicker=findViewById(R.id.regdob);
+        final Calendar calendar=Calendar.getInstance();
+       final int year=calendar.get(Calendar.YEAR);
+        final int month=calendar.get(Calendar.MONTH);
+        final int day=calendar.get(Calendar.DAY_OF_MONTH);
 
-        //for date pf birth
+      //  for date pf birth
         datepicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //for date of birth
-                year=calendar.get(Calendar.YEAR);
-               month=calendar.get(Calendar.MONTH);
-                day=calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog= new DatePickerDialog(Signup.this, new DatePickerDialog.OnDateSetListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        datepicker.setText(SimpleDateFormat.getDateInstance().format(calendar.getTime()));
+                DatePickerDialog datePickerDialog= new DatePickerDialog(Signup.this, android.R.style.Theme_Holo_Dialog_MinWidth,setListener,year,month,day) ;
 
-                    }
-                },year,month,day);
-                datePickerDialog.show();
-                //end date of birth
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+     datePickerDialog.show();
+
 
             }
         });
+    setListener=new DatePickerDialog.OnDateSetListener(){
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            month=month+1;
+            String date=day+"/"+month+"/"+year;
+            datepicker.setText(date);
+        }
+    };
+
+
+
         //go to login page
-
-
         gotolog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,7 +193,7 @@ public class Signup extends AppCompatActivity {
         String phoneNo=inputPhoneNumber.getText().toString();
         String pass=inputpassword.getText().toString();
         UserHelper helperclass=new UserHelper(name,email,phoneNo,dob,pass);
-        reference.child(phoneNo).setValue(helperclass);
+        reference.child(name).setValue(helperclass);
 
     }
 
