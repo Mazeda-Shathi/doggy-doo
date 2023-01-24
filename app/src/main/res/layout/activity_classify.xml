@@ -4,15 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".classify">
+    tools:context=".HomePage">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/back">
+        <ImageView
+            android:id="@+id/classifyImage"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="30dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HHeeeeeeeellllllllllooo"
-        android:height="100dp"
-        android:width="300dp">
+        </ImageView>
+        <Button
+            android:id="@+id/capturebtn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="Capture"
+            android:layout_marginHorizontal="20dp"
+            >
+        </Button>
+        <Button
+            android:id="@+id/selectImagebtn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="Select Image">
+        </Button>
 
-    </TextView>
+
+        <Button
+            android:id="@+id/predictionbtn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="prediction
+">
+        </Button>
+        <TextView
+            android:id="@+id/result"
+            android:textColor="@color/black"
+            android:textSize="10dp"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            >
+        </TextView>
+
+    </LinearLayout>
 
 </LinearLayout>

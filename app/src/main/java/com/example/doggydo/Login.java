@@ -97,20 +97,22 @@ public class Login extends AppCompatActivity {
                         inputName.setError(null);
 
                         String passwordFromDB = snapshot.child(userEnteredname).child("password").getValue(String.class);
-                        Toast.makeText(getApplicationContext(),"password is"+passwordFromDB,Toast.LENGTH_LONG).show();
+
                         if (passwordFromDB.equals(userEnteredPassword)) {
                             String nameFromDB = snapshot.child(userEnteredname).child("name").getValue(String.class);
                             String dateOfBirthDB = snapshot.child(userEnteredname).child("dateOfBirth").getValue(String.class);
                             String emailFromDB = snapshot.child(userEnteredname).child("email").getValue(String.class);
                             String phoneFromDB = snapshot.child(userEnteredname).child("phoneNumber").getValue(String.class);
 
-                            Intent intent = new Intent(getApplicationContext(), classify.class);
+                            Intent intent = new Intent(getApplicationContext(), Profile.class);
+
 
                             intent.putExtra("name", nameFromDB);
-                            intent.putExtra("email", nameFromDB);
-                            intent.putExtra("phoneNumber", nameFromDB);
-                            intent.putExtra("dateOfBirth", nameFromDB);
-                            intent.putExtra("password", nameFromDB);
+                            intent.putExtra("email", emailFromDB);
+                            intent.putExtra("phoneNumber", phoneFromDB);
+                            intent.putExtra("dateOfBirth", dateOfBirthDB);
+                            intent.putExtra("password", passwordFromDB);
+                            Toast.makeText(getApplicationContext(),"Successfully login",Toast.LENGTH_SHORT).show();
 
                             startActivity(intent);
                         } else {

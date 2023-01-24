@@ -8,13 +8,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.os.Handler;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+public class MainActivity extends AppCompatActivity  {
+//    FirebaseDatabase mAuth;
+//    DatabaseReference mRef;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        mAuth= FirebaseDatabase.getInstance().getCurrentUser();
+//        mRef=FirebaseDatabase.getInstance().getReference().child("name");
+//      //  Query checkUser = mRef.orderByChild("name").equalTo(userEnteredname);
 
 
 

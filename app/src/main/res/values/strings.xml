@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Doggy Do</string>
+    <string name="app_name">Doggy Doo</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="navigation_open_drawer">Open Navigation Drawer</string>
+    <string name="navigation_close_drawer">Close Navigation Drawer</string>
+
+
 </resources>

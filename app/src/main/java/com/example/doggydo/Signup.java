@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.Calendar;
 
@@ -93,6 +94,7 @@ public class Signup extends AppCompatActivity {
     //for validate data
     private Boolean validateName(){
         String val=inputName.getText().toString();
+
         if(val.isEmpty()){
             inputName.setError("Field cannot be empty");
             return false;
@@ -192,8 +194,18 @@ public class Signup extends AppCompatActivity {
         String dob=inputDateOfBirth.getText().toString();
         String phoneNo=inputPhoneNumber.getText().toString();
         String pass=inputpassword.getText().toString();
+
+
+
+//        Query checkUser = reference.orderByChild("name");
+//        String n = checkUser.getValue(String.class);
+//        if(n==name){
+//            inputName.setError("name already exist");
+//        }
+
         UserHelper helperclass=new UserHelper(name,email,phoneNo,dob,pass);
         reference.child(name).setValue(helperclass);
+
 
     }
 
