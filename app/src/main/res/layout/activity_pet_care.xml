@@ -6,13 +6,131 @@
     android:layout_height="match_parent"
     tools:context=".PetCare">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="pet Care"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="317dp"
-        tools:ignore="MissingConstraints" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--    //headline-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="#148F77">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Suggested Videos"
+                    android:textSize="20dp"
+
+                    android:background="#148F77"
+                    android:textColor="@color/white"
+                    android:padding="25px"
+                    >
+
+                </TextView>
+            </LinearLayout>
+
+
+            <!--    1st video-->
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtube_player_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:videoId="MCvrxJgy8r0"
+                app:autoPlay="false"
+                android:padding="10dp"
+
+
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/baseline_arrow_forward_24"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How to bathe your Dog"
+                    android:textSize="20dp"
+                    android:layout_margin="10dp"
+                    android:padding="5px"
+                    android:textColor="#148F77"/>
+            </LinearLayout>
+            <!--    2nd video-->
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtube_player_view2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:videoId="wAHbwu2nXMs"
+                app:autoPlay="false"
+                android:padding="10dp"
+
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/baseline_arrow_forward_24"></TextView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How to take care of a new puppy ( caring tips )"
+                    android:textSize="20dp"
+                    android:layout_margin="10dp"
+                    android:padding="5px"
+                    android:textColor="#148F77"/>
+                <!--        android:background="#148F77"-->
+                <!--        android:textColor="@color/white"-->
+
+            </LinearLayout>
+
+            <!--    3rd video-->
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtube_player_view3"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                app:videoId="qOoCIlYxLb4"
+                app:autoPlay="false"
+                android:padding="10dp"
+
+
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/baseline_arrow_forward_24"></TextView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Labrador Puppy Learning and Performing Training Commands | Dog Showing All Training Skills"
+                    android:textSize="20dp"
+                    android:layout_margin="10dp"
+                    android:padding="5px"
+                    android:textColor="#148F77"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
