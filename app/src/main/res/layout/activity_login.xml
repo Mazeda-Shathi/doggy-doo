@@ -21,9 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="20dp"
-        android:text="Full Name"/>
+        android:text="Your Email"/>
     <EditText
-        android:id="@+id/loginName"
+        android:id="@+id/log_Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
@@ -33,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password"
+
         android:layout_marginLeft="80dp" />
     <EditText
         android:id="@+id/loginPass"

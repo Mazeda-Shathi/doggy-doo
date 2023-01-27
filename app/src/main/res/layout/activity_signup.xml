@@ -70,7 +70,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email"
-                android:layout_marginLeft="80dp" />
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="20dp"/>
             <EditText
                 android:id="@+id/RegEmail"
                 android:layout_width="wrap_content"
@@ -100,7 +101,7 @@
                 android:layout_marginLeft="90dp"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="#148F77"
-                android:onClick="registerUser"
+             android:onClick="registerUser"
                 android:rotationX="-4"
                 android:text="Submit"
                 android:textAllCaps="false"
@@ -113,7 +114,6 @@
                 android:layout_marginTop="10dp"
                 android:text="Already Registered? Login here"
                 android:gravity="center"
-
                 android:textSize="18dp"
                 android:textColor="#148F77"
                 android:backgroundTint="@color/white"

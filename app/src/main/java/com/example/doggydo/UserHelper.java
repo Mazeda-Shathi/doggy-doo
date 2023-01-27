@@ -3,10 +3,10 @@ package com.example.doggydo;
 
 public class UserHelper {
 
-    String name,dateaOfBirth,phoneNumber,email,password;
+    String name,dateaOfBirth,phoneNumber;
 
-    public UserHelper() {
-    }
+
+
 
     public String getName() {
         return name;
@@ -16,13 +16,13 @@ public class UserHelper {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+//    public String getEmail() {
+//        return email;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
 
     public String getDateaOfBirth() {
         return dateaOfBirth;
@@ -41,20 +41,18 @@ public class UserHelper {
     }
 
 
-    public String getPassword() {
-        return password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
-    public UserHelper(String name, String email, String phoneNumber, String dateaOfBirth, String password) {
+    public UserHelper(String name, String phoneNumber, String dateaOfBirth) {
         this.name = name;
-        this.email = email;
         this.phoneNumber = phoneNumber;
         this.dateaOfBirth = dateaOfBirth;
-        this.password = password;
 
     }
 

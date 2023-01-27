@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:padding="20dp">
+
         <com.google.android.material.textfield.TextInputLayout
             android:hint="Full Name"
             android:id="@+id/full_name_profile"

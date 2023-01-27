@@ -30,7 +30,7 @@ import java.util.List;
 
 public class classify extends AppCompatActivity {
 
-    Button capture,select,predict;
+    Button capture,select,predict,back;
     TextView result;
     ImageView classifyImage;
     Bitmap bitmap;
@@ -45,6 +45,14 @@ public class classify extends AppCompatActivity {
         predict=findViewById(R.id.predictionbtn);
         result=findViewById(R.id.result);
         classifyImage=findViewById(R.id.classifyImage);
+        back=findViewById(R.id.backHome);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(classify.this,HomePage.class);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -83,9 +91,9 @@ public class classify extends AppCompatActivity {
                     Model.Outputs outputs = model.process(image);
                     List<Category> probability = outputs.getProbabilityAsCategoryList();
                     int index=getMax(probability);
-                    String dog=probability.get(index).getLabel();
+                    String dog=probability.get(index).getLabel().substring(10);
                     float find=probability.get(index).getScore();
-                    result.setText("Result is "+dog+" with probability"+find);
+                    result.setText("It's "+dog+" with probability "+find);
 
                     // Releases model resources if no longer used.
                     model.close();

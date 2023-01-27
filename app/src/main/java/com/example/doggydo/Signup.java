@@ -1,5 +1,6 @@
 package com.example.doggydo;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +16,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -30,6 +36,7 @@ public class Signup extends AppCompatActivity {
     FirebaseDatabase rootnode;
     DatabaseReference reference;
     DatePickerDialog.OnDateSetListener setListener;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +49,14 @@ public class Signup extends AppCompatActivity {
 
         //sign up section
         inputName=findViewById(R.id.regName);
-        inputEmail=findViewById(R.id.RegEmail);
         inputPhoneNumber=findViewById(R.id.RegPNum);
         inputDateOfBirth=findViewById(R.id.regdob);
         inputpassword=findViewById(R.id.RegPass);
+        inputEmail=findViewById(R.id.RegEmail);
 
         btnregSubmit=findViewById(R.id.btnRegSub);
         gotolog=findViewById(R.id.btngotoLog);
+        mAuth=FirebaseAuth.getInstance();
          //for date
         datepicker=findViewById(R.id.regdob);
         final Calendar calendar=Calendar.getInstance();
@@ -178,22 +186,45 @@ public class Signup extends AppCompatActivity {
 
     //for signup save data in firebase
     public void registerUser(View view){
-        if(!validateName() | !validateEmail() | !validatePhoneNumber() | !validatePassword() | !validatedob())
+       if(!validateName() | !validateEmail() | !validatePhoneNumber() | !validatePassword() | !validatedob())
+
         {
             return;
 
         }
+        String em=inputEmail.getText().toString();
+        String pa=inputpassword.getText().toString();
+
+        mAuth.createUserWithEmailAndPassword(em,pa).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(Signup.this,"Registration is successfull",Toast.LENGTH_SHORT).show();
+                    saveDatabase();
+                    Intent intent=new Intent(Signup.this,Profile.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
+                    Toast.makeText(Signup.this,"Registration is Failed",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
 
 
+    }
+
+    public void saveDatabase() {
 
         rootnode = FirebaseDatabase.getInstance();
         reference=rootnode.getReference("UserDetails");
         //get the values
         String name=inputName.getText().toString();
-        String email=inputEmail.getText().toString();
         String dob=inputDateOfBirth.getText().toString();
         String phoneNo=inputPhoneNumber.getText().toString();
-        String pass=inputpassword.getText().toString();
+
 
 
 
@@ -203,13 +234,10 @@ public class Signup extends AppCompatActivity {
 //            inputName.setError("name already exist");
 //        }
 
-        UserHelper helperclass=new UserHelper(name,email,phoneNo,dob,pass);
+        UserHelper helperclass=new UserHelper(name,phoneNo,dob);
         reference.child(name).setValue(helperclass);
 
-
     }
-
-
 
 
 }
