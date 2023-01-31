@@ -1,11 +1,17 @@
 package com.example.doggydo;
 
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserHelper {
 
-    String name,dateaOfBirth,phoneNumber;
+
+    String name,dateaOfBirth,phoneNumber,userName,email,password,Proimg;
+
+    public UserHelper(CircleImageView proimg) {
 
 
+    }
 
 
     public String getName() {
@@ -16,13 +22,22 @@ public class UserHelper {
         this.name = name;
     }
 
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName= userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getDateaOfBirth() {
         return dateaOfBirth;
@@ -41,18 +56,22 @@ public class UserHelper {
     }
 
 
-//    public String getPassword() {
-//        return password;
-//    }
+    public String getPassword() {
+        return password;
+    }
 
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    public UserHelper(String name, String phoneNumber, String dateaOfBirth) {
+    public UserHelper(String name, String phoneNumber, String dateaOfBirth,String userName,String email,String password) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.dateaOfBirth = dateaOfBirth;
+        this.userName= userName;
+        this.email=email;
+        this.password=password;
+
 
     }
 

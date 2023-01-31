@@ -38,6 +38,7 @@ public class Login extends AppCompatActivity {
         inputpassword=findViewById(R.id.loginPass);
         mAuth=FirebaseAuth.getInstance();
 
+
         gotoRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,12 +90,14 @@ public class Login extends AppCompatActivity {
         String em=inputEmail.getText().toString();
         String pa=inputpassword.getText().toString();
 
+
         mAuth.signInWithEmailAndPassword(em,pa).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(Login.this,"Login is successfull",Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(Login.this,Profile.class);
+
+                    Toast.makeText(Login.this,"Successfully login",Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(Login.this,HomePage.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
@@ -141,7 +144,8 @@ public class Login extends AppCompatActivity {
 //                            intent.putExtra("phoneNumber", phoneFromDB);
 //                            intent.putExtra("dateOfBirth", dateOfBirthDB);
 //                            intent.putExtra("password", passwordFromDB);
-//                            Toast.makeText(getApplicationContext(),"Successfully login",Toast.LENGTH_SHORT).show();
+//                            Toast.m
+//                            akeText(getApplicationContext(),"Successfully login",Toast.LENGTH_SHORT).show();
 //
 //                            startActivity(intent);
 //                        } else {

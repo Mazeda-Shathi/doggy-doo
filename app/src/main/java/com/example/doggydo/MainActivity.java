@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,7 +43,9 @@ public class MainActivity extends AppCompatActivity  {
             public void run() {
                 if(mUser!=null)
                 {
-                    mRef.child(mUser.getDisplayName()).addValueEventListener(new ValueEventListener() {
+
+                    //Toast.makeText(MainActivity.this,"dis"+s,Toast.LENGTH_SHORT).show();
+                    mRef.child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.exists())

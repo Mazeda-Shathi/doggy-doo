@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
@@ -84,12 +85,17 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(intent3);
                 break;
             case R.id.nav_logOut:
+                FirebaseAuth.getInstance().signOut();
                 Intent intent4=new Intent(HomePage.this,Login.class);
                 startActivity(intent4);
                 break;
             case R.id.nav_prfoile:
                 Intent intent5=new Intent(HomePage.this,Profile.class);
                 startActivity(intent5);
+                break;
+            case R.id.nav_Blog:
+                Intent intent6=new Intent(HomePage.this,Blog.class);
+                startActivity(intent6);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

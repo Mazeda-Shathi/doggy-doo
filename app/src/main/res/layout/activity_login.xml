@@ -15,26 +15,18 @@
         android:textSize="25dp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:layout_gravity="center"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="20dp"
-        android:text="Your Email"/>
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"/>
+
     <EditText
         android:id="@+id/log_Email"
+        android:hint="Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
         android:backgroundTint="#148F77"
         android:ems="10"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password"
 
-        android:layout_marginLeft="80dp" />
     <EditText
         android:id="@+id/loginPass"
         android:layout_width="wrap_content"
@@ -42,6 +34,7 @@
         android:layout_marginLeft="80dp"
         android:inputType="textPassword"
         android:backgroundTint="#148F77"
+        android:hint="Password"
         android:ems="10" />
 <!--    <TextView-->
 <!--        android:layout_width="wrap_content"-->

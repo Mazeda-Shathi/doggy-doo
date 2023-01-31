@@ -6,23 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Blog">
 
-    <EditText
-       android:id="@+id/inputAddPost"
-        android:layout_width="405dp"
-        android:layout_height="104dp"
-        android:background="#148F77"
-        android:gravity="center"
-        android:text="Add your blog"
-        android:textColor="@color/white"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="0dp"></EditText>
 
-
-<!--    <ImageView-->
+    <!--    <ImageView-->
 <!--        android:id="@+id/addimagePost"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="100dp"-->
@@ -33,24 +18,40 @@
 
 <!--    </ImageView>-->
 
+    <EditText
+        android:id="@+id/inputAddPost"
+        android:layout_width="404dp"
+        android:layout_height="98dp"
+        android:background="#148F77"
+        android:gravity="center"
+        android:hint="Added something here"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="1dp"></EditText>
+
     <ImageView
         android:id="@+id/addImagePost"
-        android:layout_width="71dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="66dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_photo_library_24"
-        tools:layout_editor_absoluteY="35dp"
         tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/sendImagePost"
-        android:layout_width="46dp"
-        android:layout_height="33dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="328dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_send_24"
-        tools:layout_editor_absoluteY="42dp"
         tools:ignore="MissingConstraints" />
 
 

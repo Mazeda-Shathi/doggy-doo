@@ -28,8 +28,10 @@ import com.google.firebase.database.Query;
 
 import java.util.Calendar;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Signup extends AppCompatActivity {
-    EditText datepicker,inputName,inputEmail,inputPhoneNumber,inputDateOfBirth,inputpassword;
+    EditText datepicker,inputName,inputEmail,inputPhoneNumber,inputDateOfBirth,inputpassword,inputUsername;
     int year,month,day;
     Button btnregSubmit;
     TextView  gotolog;
@@ -37,14 +39,12 @@ public class Signup extends AppCompatActivity {
     DatabaseReference reference;
     DatePickerDialog.OnDateSetListener setListener;
     FirebaseAuth mAuth;
+    CircleImageView Proimg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
-
-
 
 
         //sign up section
@@ -53,6 +53,7 @@ public class Signup extends AppCompatActivity {
         inputDateOfBirth=findViewById(R.id.regdob);
         inputpassword=findViewById(R.id.RegPass);
         inputEmail=findViewById(R.id.RegEmail);
+        inputUsername=findViewById(R.id.Reg_userName);
 
         btnregSubmit=findViewById(R.id.btnRegSub);
         gotolog=findViewById(R.id.btngotoLog);
@@ -86,9 +87,7 @@ public class Signup extends AppCompatActivity {
         }
     };
 
-
-
-        //go to login page
+    //go to login page
         gotolog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,8 +96,45 @@ public class Signup extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btnregSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    if(!validateName() | !validateEmail() | !validatePhoneNumber() | !validatePassword() | !validatedob() | !validateUsername())
+
+                    {
+                        return;
+
+                    }
+                    String em=inputEmail.getText().toString();
+                    String pa=inputpassword.getText().toString();
+
+                    mAuth.createUserWithEmailAndPassword(em,pa).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(Signup.this,"Registration is successfull",Toast.LENGTH_SHORT).show();
+                                saveDatabase();
+                                Intent intent=new Intent(Signup.this,Profile.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else{
+                                Toast.makeText(Signup.this,"Registration is Failed",Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    });
+
+
+                }
+
+        });
 
     }
+
+
+
     //for validate data
     private Boolean validateName(){
         String val=inputName.getText().toString();
@@ -182,41 +218,28 @@ public class Signup extends AppCompatActivity {
 
         }
     }
-
-
-    //for signup save data in firebase
-    public void registerUser(View view){
-       if(!validateName() | !validateEmail() | !validatePhoneNumber() | !validatePassword() | !validatedob())
-
-        {
-            return;
-
+    private Boolean validateUsername() {
+        String val = inputUsername.getText().toString();
+        String noWhiteSpace = "\\A\\w{4,20}\\z";
+        if (val.isEmpty()) {
+            inputUsername.setError("Field cannot be empty");
+            return false;
+        } else if (val.length() >= 15) {
+            inputUsername.setError("Username too long");
+            return false;
+        } else if (!val.matches(noWhiteSpace)) {
+            inputUsername.setError("White Spaces are not allowed");
+            return false;
+        } else {
+            inputUsername.setError(null);
+            return true;
         }
-        String em=inputEmail.getText().toString();
-        String pa=inputpassword.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(em,pa).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(Signup.this,"Registration is successfull",Toast.LENGTH_SHORT).show();
-                    saveDatabase();
-                    Intent intent=new Intent(Signup.this,Profile.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-                else{
-                    Toast.makeText(Signup.this,"Registration is Failed",Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
-
 
     }
+    //for signup save data in firebase
 
     public void saveDatabase() {
+
 
         rootnode = FirebaseDatabase.getInstance();
         reference=rootnode.getReference("UserDetails");
@@ -224,7 +247,10 @@ public class Signup extends AppCompatActivity {
         String name=inputName.getText().toString();
         String dob=inputDateOfBirth.getText().toString();
         String phoneNo=inputPhoneNumber.getText().toString();
-
+        String userName=inputUsername.getText().toString();
+        String email=inputEmail.getText().toString();
+        String password=inputpassword.getText().toString();
+        String uId=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
 
@@ -234,10 +260,11 @@ public class Signup extends AppCompatActivity {
 //            inputName.setError("name already exist");
 //        }
 
-        UserHelper helperclass=new UserHelper(name,phoneNo,dob);
-        reference.child(name).setValue(helperclass);
+        UserHelper helperclass=new UserHelper(name,phoneNo,dob,userName,email,password);
+        reference.child(uId).setValue(helperclass);
 
     }
+
 
 
 }

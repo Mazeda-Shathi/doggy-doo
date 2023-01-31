@@ -8,13 +8,13 @@
     android:background="@drawable/back">
 
     <ImageView
-
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+            android:id="@+id/proImage_drawer"
+        android:layout_width="89dp"
+        android:layout_height="63dp"
         android:src="@drawable/baseline_person_pin_24"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="40dp" />
+        tools:layout_editor_absoluteY="114dp" />
 
 
 

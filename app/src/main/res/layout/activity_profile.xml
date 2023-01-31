@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,99 +11,146 @@
     android:orientation="vertical">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="100dp"
-        android:layout_height="102dp"
-        android:layout_centerVertical="true"
-        android:src="@drawable/baseline_person_pin_24"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"/>
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/dp"
+        app:civ_border_color="#FF000000"
+        app:civ_border_overlay="false"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/addimageText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Image"
+        android:layout_gravity="center"></TextView>
+
 
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:padding="20dp">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:hint="Full Name"
-            android:id="@+id/full_name_profile"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-            <com.google.android.material.textfield.TextInputEditText
+            android:text="Full Name"
+            android:layout_marginLeft="30dp">
 
-                android:drawablePadding="10dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
+        </TextView>
+        <EditText
+            android:id="@+id/ProName"
 
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:hint="Date of Birth"
-            android:id="@+id/dob_profile"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-            <com.google.android.material.textfield.TextInputEditText
-
-                android:drawablePadding="10dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:hint="Phone Number"
-            android:id="@+id/phoneNo_profile"
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#148F77"
+            android:ems="10"
+            />
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-            <com.google.android.material.textfield.TextInputEditText
+            android:text="Date of Birth"
+            android:layout_marginLeft="30dp">
 
-                android:drawablePadding="10dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:hint="Email "
-            android:id="@+id/email_profile"
+        </TextView>
+        <EditText
+            android:id="@+id/Prodob"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-            <com.google.android.material.textfield.TextInputEditText
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#148F77"
+            android:ems="10"/>
 
-                android:drawablePadding="10dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:hint="Password"
-            android:id="@+id/password_profile"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-            <com.google.android.material.textfield.TextInputEditText
+            android:text="Phone Number"
+            android:layout_marginLeft="30dp">
 
-                android:drawablePadding="10dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
+        </TextView>
+        <EditText
+            android:id="@+id/ProPNum"
 
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#148F77"
+            android:inputType="number"
+            android:ems="10"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:layout_marginLeft="30dp">
 
+        </TextView>
 
+        <EditText
+            android:id="@+id/ProEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#148F77"
+            android:ems="10" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:layout_marginLeft="30dp">
 
+        </TextView>
+        <EditText
+            android:id="@+id/ProUsername"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+
+            android:backgroundTint="#148F77"
+            android:ems="10" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:layout_marginLeft="30dp">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/ProPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+
+            android:backgroundTint="#148F77"
+            android:ems="10" />
         <Button
+            android:id="@+id/btnUpdate"
             android:background="#fece2f"
             android:fontFamily="@font/baloo"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
+            android:backgroundTint="#148F79"
+            android:textColor="@color/white"
+
             android:text="UPDATE" />
         <Button
             android:id="@+id/backHome"
             android:background="#fece2f"
             android:fontFamily="@font/baloo"
             android:layout_height="wrap_content"
+            android:backgroundTint="#148F79"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
+            android:textColor="@color/white"
             android:text="Back to home" />
 
     </LinearLayout>
+
 </LinearLayout>
