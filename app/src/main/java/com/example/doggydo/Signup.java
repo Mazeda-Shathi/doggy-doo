@@ -5,16 +5,20 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +44,7 @@ public class Signup extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener setListener;
     FirebaseAuth mAuth;
     CircleImageView Proimg;
+    ProgressDialog mloadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,70 @@ public class Signup extends AppCompatActivity {
        final int year=calendar.get(Calendar.YEAR);
         final int month=calendar.get(Calendar.MONTH);
         final int day=calendar.get(Calendar.DAY_OF_MONTH);
+        mloadingBar=new ProgressDialog(this);
+        TextWatcher watcherPhnNumber=new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String val=inputPhoneNumber.getText().toString();
+                String phonNumberpattern="[0][1][^012]{1}[0-9]{8}";
+                if(val.isEmpty()){
+                    inputPhoneNumber.setError("Field cannot be empty");
+
+                }
+                else if(!val.matches(phonNumberpattern)){
+                    inputPhoneNumber.setError("Invalid Phone Number");
+
+                }
+                else{
+                    inputPhoneNumber.setError(null);
+
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+        inputPhoneNumber.addTextChangedListener(watcherPhnNumber);
+
+        TextWatcher watcherEmail=new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String val=inputEmail.getText().toString();
+                String emailPattern="[a-zA-z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if(val.isEmpty()){
+                    inputEmail.setError("Field cannot be empty");
+                }
+                else if(!val.matches(emailPattern)){
+                    inputEmail.setError("Invalid email address");
+                }
+
+                else{
+                    inputEmail.setError(null);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+        inputEmail.addTextChangedListener(watcherEmail);
+
 
       //  for date pf birth
         datepicker.setOnClickListener(new View.OnClickListener() {
@@ -99,11 +168,16 @@ public class Signup extends AppCompatActivity {
         btnregSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if(!validateName() | !validateEmail() | !validatePhoneNumber() | !validatePassword() | !validatedob() | !validateUsername())
+                    if(!validateName()   | !validatePassword() | !validatedob() | !validateUsername())
 
                     {
                         return;
 
+                    }
+                    else{
+                        mloadingBar.setTitle("Wait for registration");
+                        mloadingBar.setCanceledOnTouchOutside(false);
+                        mloadingBar.show();
                     }
                     String em=inputEmail.getText().toString();
                     String pa=inputpassword.getText().toString();
@@ -112,6 +186,8 @@ public class Signup extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
+
+                                mloadingBar.dismiss();
                                 Toast.makeText(Signup.this,"Registration is successfull",Toast.LENGTH_SHORT).show();
                                 saveDatabase();
                                 Intent intent=new Intent(Signup.this,Profile.class);
@@ -120,6 +196,7 @@ public class Signup extends AppCompatActivity {
                                 finish();
                             }
                             else{
+                                mloadingBar.dismiss();
                                 Toast.makeText(Signup.this,"Registration is Failed",Toast.LENGTH_SHORT).show();
 
                             }
@@ -161,42 +238,6 @@ public class Signup extends AppCompatActivity {
         else{
             inputDateOfBirth.setError(null);
 
-            return true;
-
-        }
-    }
-    private Boolean validatePhoneNumber(){
-        String val=inputPhoneNumber.getText().toString();
-        String phonNumberpattern="[0][1][^012]{1}[0-9]{8}";
-        if(val.isEmpty()){
-            inputPhoneNumber.setError("Field cannot be empty");
-            return false;
-        }
-        else if(!val.matches(phonNumberpattern)){
-            inputPhoneNumber.setError("Invalid Phone Number");
-            return false;
-        }
-        else{
-            inputPhoneNumber.setError(null);
-            return true;
-
-        }
-    }
-    private Boolean validateEmail(){
-        String val=inputEmail.getText().toString();
-        String emailPattern="[a-zA-z0-9._-]+@[a-z]+\\.+[a-z]+";
-        if(val.isEmpty()){
-            inputEmail.setError("Field cannot be empty");
-            return false;
-
-        }
-        else if(!val.matches(emailPattern)){
-            inputEmail.setError("Invalid email address");
-            return false;
-        }
-
-        else{
-            inputEmail.setError(null);
             return true;
 
         }
@@ -264,7 +305,6 @@ public class Signup extends AppCompatActivity {
         reference.child(uId).setValue(helperclass);
 
     }
-
 
 
 }

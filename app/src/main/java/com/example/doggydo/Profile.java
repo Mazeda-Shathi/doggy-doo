@@ -5,12 +5,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.internal.Storage;
@@ -38,7 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Profile extends AppCompatActivity {
     private static final int REQUEST_CODE =10 ;
     EditText name, password, email, dob, phoneNo,UserName;
-    CircleImageView Proimg,ProImg2;
+    CircleImageView Proimg;
     TextInputLayout addImageText;
     Button backhome,btnUpdate;
     FirebaseAuth mAuth;
@@ -48,6 +50,7 @@ public class Profile extends AppCompatActivity {
     Uri imguri;
    FirebaseStorage storage;
    StorageReference storageRef;
+   ProgressDialog mloadingBar;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -92,16 +95,21 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                String uId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+//
             storageRef.child(uId).putFile(imguri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                     storageRef.child(mUser.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
+//                            mloadingBar.setTitle("Wait");
+//                mloadingBar.setCanceledOnTouchOutside(false);
+//                mloadingBar.show();
                             HashMap hashMap=new HashMap();
                             hashMap.put("Profile_Image",uri.toString());
-                            hashMap.put("name",name);
-                            Toast.makeText(Profile.this,"name "+name,Toast.LENGTH_SHORT).show();
+
+                           // hashMap.put("name",name);
+                          //  Toast.makeText(Profile.this,"name "+name,Toast.LENGTH_SHORT).show();
 
 
 
@@ -109,6 +117,7 @@ public class Profile extends AppCompatActivity {
                             mRef.child(mUser.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
                                 @Override
                                 public void onSuccess(Object o) {
+//                                    mloadingBar.dismiss();
                                     Toast.makeText(Profile.this,"img added",Toast.LENGTH_SHORT).show();
                                     Intent intent=new Intent(Profile.this,HomePage.class);
                                     startActivity(intent);
@@ -117,6 +126,7 @@ public class Profile extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
+
                                     Toast.makeText(Profile.this,"img failed",Toast.LENGTH_SHORT).show();
 
                                 }
@@ -181,7 +191,7 @@ public class Profile extends AppCompatActivity {
                            dob.setText(birth);
                            UserName.setText(uname);
 
-                            Toast.makeText(Profile.this,PimgUrl,Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(Profile.this,PimgUrl,Toast.LENGTH_SHORT).show();
                             Picasso.get().load(PimgUrl).into(Proimg);
 
 

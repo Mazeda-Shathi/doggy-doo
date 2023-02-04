@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 
+import com.example.doggydo.Utills.Posts;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -97,6 +98,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 Intent intent6=new Intent(HomePage.this,Blog.class);
                 startActivity(intent6);
                 break;
+
+
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
