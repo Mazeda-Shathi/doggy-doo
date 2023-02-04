@@ -44,7 +44,6 @@
         </TextView>
         <EditText
             android:id="@+id/ProName"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -60,6 +59,7 @@
         </TextView>
         <EditText
             android:id="@+id/Prodob"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -92,6 +92,7 @@
 
         <EditText
             android:id="@+id/ProEmail"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -106,6 +107,7 @@
         </TextView>
         <EditText
             android:id="@+id/ProUsername"
+            android:outlineAmbientShadowColor="@color/browser_actions_bg_grey"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,6 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
+            android:outlineAmbientShadowColor="@color/browser_actions_bg_grey"
 
             android:backgroundTint="#148F77"
             android:ems="10" />

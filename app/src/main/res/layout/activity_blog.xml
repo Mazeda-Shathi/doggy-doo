@@ -20,8 +20,8 @@
 
     <EditText
         android:id="@+id/inputAddPost"
-        android:layout_width="404dp"
-        android:layout_height="98dp"
+        android:layout_width="406dp"
+        android:layout_height="109dp"
         android:background="#148F77"
         android:gravity="center"
         android:hint="Added something here"
@@ -53,6 +53,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_send_24"
         tools:ignore="MissingConstraints" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

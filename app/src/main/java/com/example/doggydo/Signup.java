@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ public class Signup extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener setListener;
     FirebaseAuth mAuth;
     CircleImageView Proimg;
+    ProgressDialog mloadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,7 @@ public class Signup extends AppCompatActivity {
        final int year=calendar.get(Calendar.YEAR);
         final int month=calendar.get(Calendar.MONTH);
         final int day=calendar.get(Calendar.DAY_OF_MONTH);
+        mloadingBar=new ProgressDialog(this);
 
       //  for date pf birth
         datepicker.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +109,11 @@ public class Signup extends AppCompatActivity {
                         return;
 
                     }
+                    else{
+                        mloadingBar.setTitle("Wait for registration");
+                        mloadingBar.setCanceledOnTouchOutside(false);
+                        mloadingBar.show();
+                    }
                     String em=inputEmail.getText().toString();
                     String pa=inputpassword.getText().toString();
 
@@ -112,6 +121,8 @@ public class Signup extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
+
+                                mloadingBar.dismiss();
                                 Toast.makeText(Signup.this,"Registration is successfull",Toast.LENGTH_SHORT).show();
                                 saveDatabase();
                                 Intent intent=new Intent(Signup.this,Profile.class);
@@ -120,6 +131,7 @@ public class Signup extends AppCompatActivity {
                                 finish();
                             }
                             else{
+                                mloadingBar.dismiss();
                                 Toast.makeText(Signup.this,"Registration is Failed",Toast.LENGTH_SHORT).show();
 
                             }

@@ -20,6 +20,10 @@
         android:id="@+id/nav_Blog"
         android:title="Blog"
         android:icon="@drawable/ic_baseline_content_paste_24"></item>
+    <item
+        android:id="@+id/nav_post"
+        android:title="See Post"
+        android:icon="@drawable/ic_baseline_content_paste_24"></item>
 
 </group>
     <group android:checkableBehavior="single">
