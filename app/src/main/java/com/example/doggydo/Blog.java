@@ -203,13 +203,16 @@ public class Blog extends AppCompatActivity {
                        }
                    }
                });
+
 //               holder.commentLogo.setOnClickListener(new View.OnClickListener() {
 //                   @Override
 //                   public void onClick(View v) {
+//                       Toast.makeText(Blog.this, "comment click", Toast.LENGTH_SHORT).show();
 //                       LoadComment(postKey);
 //                   }
 //               });
                 LoadComment(postKey);
+
 
             }
 

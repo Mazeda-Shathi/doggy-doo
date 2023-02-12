@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -43,6 +44,7 @@ public class Signup extends AppCompatActivity {
     DatabaseReference reference;
     DatePickerDialog.OnDateSetListener setListener;
     FirebaseAuth mAuth;
+    FirebaseUser mUser;
     CircleImageView Proimg;
     ProgressDialog mloadingBar;
 
@@ -63,6 +65,11 @@ public class Signup extends AppCompatActivity {
         btnregSubmit=findViewById(R.id.btnRegSub);
         gotolog=findViewById(R.id.btngotoLog);
         mAuth=FirebaseAuth.getInstance();
+        //firebase
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+      reference = FirebaseDatabase.getInstance().getReference().child("UserDetails").child("userName");
+        Toast.makeText(this, "username"+reference.toString(), Toast.LENGTH_SHORT).show();
          //for date
         datepicker=findViewById(R.id.regdob);
         final Calendar calendar=Calendar.getInstance();

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -28,12 +29,16 @@ import org.tensorflow.lite.support.label.Category;
 import java.io.IOException;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class classify extends AppCompatActivity {
 
-    Button capture,select,predict,back;
-    TextView result;
-    ImageView classifyImage;
+    Button predict;
+    TextView result,capture,select;
+   CircleImageView classifyImage;
     Bitmap bitmap;
+    ImageView back;
+    ProgressDialog mloadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +46,13 @@ public class classify extends AppCompatActivity {
         setContentView(R.layout.activity_classify);
         getPermission();
        capture=findViewById(R.id.capturebtn);
+       back=findViewById(R.id.backHome);
         select=findViewById(R.id.selectImagebtn);
         predict=findViewById(R.id.predictionbtn);
         result=findViewById(R.id.result);
         classifyImage=findViewById(R.id.classifyImage);
-        back=findViewById(R.id.backHome);
+        mloadingBar=new ProgressDialog(this);
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +89,9 @@ public class classify extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    mloadingBar.setTitle("Wait");
+                    mloadingBar.setCanceledOnTouchOutside(false);
+                    mloadingBar.show();
                     Model model = Model.newInstance(getApplicationContext());
 
                     // Creates inputs for reference.
@@ -92,8 +102,11 @@ public class classify extends AppCompatActivity {
                     List<Category> probability = outputs.getProbabilityAsCategoryList();
                     int index=getMax(probability);
                     String dog=probability.get(index).getLabel().substring(10);
-                    float find=probability.get(index).getScore();
-                    result.setText("It's "+dog+" with probability "+find);
+                    float find=probability.get(index).getScore()*100;
+//                    String res = null;
+//                     res = String.format("%.2f");
+                    mloadingBar.dismiss();
+                    result.setText("It's "+dog+" with probability "+find+"%");
 
                     // Releases model resources if no longer used.
                     model.close();
