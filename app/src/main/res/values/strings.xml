@@ -3,6 +3,51 @@
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="navigation_open_drawer">Open Navigation Drawer</string>
     <string name="navigation_close_drawer">Close Navigation Drawer</string>
+    <string-array name="array_bangladeshi_state">
+        <item>Select your District</item>
+        <item>Chittagong</item>
+        <item>Dhaka</item>
+        <item>Rajshahi</item>
 
+    </string-array>
+
+    <string-array name="array_default_districts">
+        <item>Select your Thana</item>
+
+    </string-array>
+    <string-array name="Dhaka">
+        <item>Select your thana</item>
+        <item>Motijheel</item>
+        <item>Mirpur</item>
+        <item>Gulsan</item>
+        <item>Banani</item>
+        <item>Shahbag</item>
+        <item>Banani</item>
+
+
+    </string-array>
+    <string-array name="Chittagong">
+        <item>Select your thana</item>
+        <item>Raozan</item>
+        <item>Karnaphuli</item>
+        <item>Anwara</item>
+        <item>Patiya</item>
+        <item>Hathhazari</item>
+        <item>Mirsharai</item>
+        <item>Rangunia</item>
+        <item>Boalkhali</item>
+    </string-array>
+    <string-array name="Rajshahi">
+        <item>Select your thana</item>
+        <item>Bagmara</item>
+        <item>Paba</item>
+        <item>Chargat</item>
+        <item>Durghapur</item>
+        <item>Godagari</item>
+        <item>Mohanpur</item>
+        <item>Bagha</item>
+        <item>Puthia</item>
+
+    </string-array>
 
 </resources>

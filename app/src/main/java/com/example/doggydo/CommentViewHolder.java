@@ -11,14 +11,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentViewHolder  extends RecyclerView.ViewHolder {
 
-    CircleImageView commentUserProfie;
+    CircleImageView commentUserProfile;
     TextView commentUserName,comment;
     public CommentViewHolder(@NonNull View itemView) {
 
         super(itemView);
         comment=itemView.findViewById(R.id.userCommentId);
         commentUserName=itemView.findViewById(R.id.CommentUserNameId);
-        commentUserProfie=itemView.findViewById(R.id.CommentUserImageId);
+        commentUserProfile=itemView.findViewById(R.id.CommentUserImageId);
 
     }
 }

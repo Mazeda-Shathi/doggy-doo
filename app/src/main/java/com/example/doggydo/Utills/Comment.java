@@ -32,10 +32,10 @@ public class Comment {
     }
 
     private String comments;
-    public Comment(){
 
-    }
+ public Comment(){
 
+ }
     public Comment(String userName, String UserProfileImageUrl, String comments) {
        this.userName=userName;
        this.UserProfileImageUrl=UserProfileImageUrl;

@@ -6,7 +6,34 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserHelper {
 
 
-    String name,dateaOfBirth,phoneNumber,userName,email,password,Proimg;
+    String name;
+    String dateaOfBirth;
+    String phoneNumber;
+    String userName;
+    String email;
+    String password;
+    String Proimg;
+
+
+    public String getDis() {
+        return dis;
+    }
+
+    public void setDis(String dis) {
+        this.dis = dis;
+    }
+
+    String dis;
+
+    public String getTha() {
+        return tha;
+    }
+
+    public void setTha(String tha) {
+        this.tha = tha;
+    }
+
+    String tha;
 
     public UserHelper(CircleImageView proimg) {
 
@@ -64,13 +91,15 @@ public class UserHelper {
         this.password = password;
     }
 
-    public UserHelper(String name, String phoneNumber, String dateaOfBirth,String userName,String email,String password) {
+    public UserHelper(String name, String phoneNumber, String dateaOfBirth, String userName, String email, String password, String dis, String tha) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.dateaOfBirth = dateaOfBirth;
         this.userName= userName;
         this.email=email;
         this.password=password;
+        this.tha=tha;
+        this.dis=dis;
 
 
     }

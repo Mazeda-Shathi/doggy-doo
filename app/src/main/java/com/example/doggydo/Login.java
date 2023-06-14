@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +30,7 @@ public class Login extends AppCompatActivity {
     EditText inputEmail,inputpassword;
  TextView gotoRegister;
  FirebaseAuth mAuth;
+ CheckBox remindMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,19 @@ public class Login extends AppCompatActivity {
 
         inputEmail=findViewById(R.id.log_Email);
         inputpassword=findViewById(R.id.loginPass);
+        remindMe=findViewById(R.id.remindId);
         mAuth=FirebaseAuth.getInstance();
+        SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
+        String checkbox=preferences.getString("remember","");
+        if(checkbox.equals("true"))
+        {
+            Intent in=new Intent(Login.this,HomePage.class);
+            startActivity(in);
+        }
+        else if(checkbox.equals("false"))
+        {
+            Toast.makeText(this, "Please Log in", Toast.LENGTH_SHORT).show();
+        }
 
 
         gotoRegister.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +64,32 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        remindMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(buttonView.isChecked())
+                {
+                    SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
+                    SharedPreferences.Editor editor=preferences.edit();
+                    editor.putString("remember","true");
+                    editor.apply();
+                    Toast.makeText(Login.this, "checked", Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                {
+                    SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
+                    SharedPreferences.Editor editor=preferences.edit();
+                    editor.putString("remember","false");
+                    editor.apply();
+                    Toast.makeText(Login.this, "Unchecked", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+
+
         
     }
     private Boolean validateEmail(){
@@ -81,6 +124,7 @@ public class Login extends AppCompatActivity {
 
         }
     }
+
     public void loginUser(View view){
         //validate login info
         if(!validateEmail() | !validatePassword()){
@@ -111,59 +155,6 @@ public class Login extends AppCompatActivity {
 
     }
 
-//    private void isUser() {
-//
-//            final String userEnteredname = inputName.getText().toString().trim();
-//            final String userEnteredPassword = inputpassword.getText().toString().trim();
-//
-//            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserDetails");
-//            Query checkUser = reference.orderByChild("name").equalTo(userEnteredname);
-//            checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                    inputName.setError(null);
-//
-//
-//                    if (snapshot.exists()) {
-//                        inputName.setError(null);
-//
-//                        String passwordFromDB = snapshot.child(userEnteredname).child("password").getValue(String.class);
-//
-//                        if (passwordFromDB.equals(userEnteredPassword)) {
-//                            String nameFromDB = snapshot.child(userEnteredname).child("name").getValue(String.class);
-//                            String dateOfBirthDB = snapshot.child(userEnteredname).child("dateOfBirth").getValue(String.class);
-//                            String emailFromDB = snapshot.child(userEnteredname).child("email").getValue(String.class);
-//                            String phoneFromDB = snapshot.child(userEnteredname).child("phoneNumber").getValue(String.class);
-//
-//                            Intent intent = new Intent(getApplicationContext(), Profile.class);
-//
-//
-//                            intent.putExtra("name", nameFromDB);
-//                            intent.putExtra("email", emailFromDB);
-//                            intent.putExtra("phoneNumber", phoneFromDB);
-//                            intent.putExtra("dateOfBirth", dateOfBirthDB);
-//                            intent.putExtra("password", passwordFromDB);
-//                            Toast.m
-//                            akeText(getApplicationContext(),"Successfully login",Toast.LENGTH_SHORT).show();
-//
-//                            startActivity(intent);
-//                        } else {
-//                            inputpassword.setError("Wrong Password");
-//                            inputpassword.requestFocus();
-//                        }
-//
-//                    } else {
-//                        inputName.setError("Wrong UserName");
-//                        inputName.requestFocus();
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//        }
+
 
 }

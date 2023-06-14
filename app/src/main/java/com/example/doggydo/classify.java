@@ -3,6 +3,7 @@ package com.example.doggydo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -34,7 +35,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class classify extends AppCompatActivity {
 
     Button predict;
-    TextView result,capture,select;
+    TextView result;
+    CardView capture,select;
    CircleImageView classifyImage;
     Bitmap bitmap;
     ImageView back;

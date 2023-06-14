@@ -4,6 +4,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.doggydo.Utills.Comment;
@@ -52,9 +54,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Blog extends AppCompatActivity {
 
-    ImageView addImagePost, sendImagePost,commentSend;
+    ImageView addImagePost, sendImagePost,commentSend,commentImage;
     FirebaseAuth mAuth;
-    DatabaseReference mRef, PostRef,likeRef,commentRef,dislikeRef;
+    DatabaseReference mRef, PostRef,likeRef,commentRef,dislikeRef,ratingRef;
     FirebaseUser mUser;
     ProgressDialog mloadingBar;
     FirebaseStorage storage;
@@ -70,8 +72,6 @@ public class Blog extends AppCompatActivity {
     FirebaseRecyclerOptions<Comment> CommentOptions;
 
 
-    //  CircleImageView profileImage,postImage;
-
     int REQUEST_CODE = 10;
 
 
@@ -83,6 +83,7 @@ public class Blog extends AppCompatActivity {
         addImagePost = findViewById(R.id.addImagePost);
         sendImagePost = findViewById(R.id.sendImagePost);
         inputPostDescription = findViewById(R.id.inputAddPost);
+//        commentImage=findViewById(R.id.commentImage);
         mloadingBar = new ProgressDialog(this);
 
         mAuth = FirebaseAuth.getInstance();
@@ -92,13 +93,13 @@ public class Blog extends AppCompatActivity {
         likeRef = FirebaseDatabase.getInstance().getReference().child("Like");
         dislikeRef = FirebaseDatabase.getInstance().getReference().child("DisLike");
         commentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
+
         storage = FirebaseStorage.getInstance();
         postImageRef = storage.getReference().child("PostImage");
 
         sendImagePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Toast.makeText(Blog.this, "Clicked", Toast.LENGTH_SHORT).show();
                 AddPost();
             }
         });
@@ -118,9 +119,10 @@ public class Blog extends AppCompatActivity {
 
     private void LoadPost() {
 
-        Query query = PostRef.orderByChild("datePost");
-      options=new FirebaseRecyclerOptions.Builder<Posts>().setQuery(query,Posts.class).build();
-        adapter=new FirebaseRecyclerAdapter<Posts, myViewHolder>(options) {
+
+//        Query query = PostRef.orderByChild("datePost");
+         options=new FirebaseRecyclerOptions.Builder<Posts>().setQuery(PostRef,Posts.class).build();
+         adapter=new FirebaseRecyclerAdapter<Posts, myViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Posts model) {
                 String postKey=getRef(position).getKey();
@@ -134,9 +136,15 @@ public class Blog extends AppCompatActivity {
                 if(model.getPostImageUrl() !="") {
                     Picasso.get().load(model.getPostImageUrl()).into(holder.postImage);
                 }
+                if(model.getUserProfileImageUrl()==null)
+                {
+                    Picasso.get().load(R.drawable.dp).into(holder.ProfileImage);
+                }
+                else
+                {
+                    Picasso.get().load(model.getUserProfileImageUrl()).into(holder.ProfileImage);
+                }
 
-
-                Picasso.get().load(model.getUserProfileImageUrl()).into(holder.ProfileImage);
                holder.likeImage.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
@@ -145,12 +153,28 @@ public class Blog extends AppCompatActivity {
                            public void onDataChange(@NonNull DataSnapshot snapshot) {
                                if(snapshot.exists()){
                                    likeRef.child(postKey).child(mUser.getUid()).removeValue();
-                                   holder.likeImage.setColorFilter(Color.GRAY);
+                                   holder.likeImage.setColorFilter(Color.BLACK);
                                    notifyDataSetChanged();
                                }
                                else {
                                    likeRef.child(postKey).child(mUser.getUid()).setValue("like");
                                    holder.likeImage.setColorFilter(Color.BLUE);
+
+                                   dislikeRef.child(postKey).child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                       @Override
+                                       public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                           if(snapshot.exists()){
+                                               dislikeRef.child(postKey).child(mUser.getUid()).removeValue();
+                                               holder.dislike.setColorFilter(Color.BLACK);
+                                               notifyDataSetChanged();
+                                           }
+                                       }
+
+                                       @Override
+                                       public void onCancelled(@NonNull DatabaseError error) {
+
+                                       }
+                                   });
                                    notifyDataSetChanged();
                                }
                            }
@@ -179,6 +203,22 @@ public class Blog extends AppCompatActivity {
                                     dislikeRef.child(postKey).child(mUser.getUid()).setValue("Dislike");
                                     holder.dislike.setColorFilter(Color.BLUE);
                                     notifyDataSetChanged();
+                                  likeRef.child(postKey).child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if(snapshot.exists()){
+                                            likeRef.child(postKey).child(mUser.getUid()).removeValue();
+                                                holder.likeImage.setColorFilter(Color.BLACK);
+                                                notifyDataSetChanged();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
                                 }
                             }
 
@@ -191,27 +231,34 @@ public class Blog extends AppCompatActivity {
 
                     }
                 });
-               holder.commentSend.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       String comment=holder.input_comment.getText().toString();
-                       if(comment.isEmpty()){
-                           Toast.makeText(Blog.this, "Please write comment", Toast.LENGTH_SHORT).show();
-                       }
-                       else {
-                           AddComment(holder,postKey,mUser.getUid(),comment);
-                       }
-                   }
-               });
+                holder.commentImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-//               holder.commentLogo.setOnClickListener(new View.OnClickListener() {
-//                   @Override
-//                   public void onClick(View v) {
-//                       Toast.makeText(Blog.this, "comment click", Toast.LENGTH_SHORT).show();
-//                       LoadComment(postKey);
-//                   }
-//               });
-                LoadComment(postKey);
+                        Intent in=new Intent(Blog.this,details_blog.class);
+                        in.putExtra("postKey",  postKey);
+                        if(model.getUserProfileImageUrl()!=null)
+                        {
+                            in.putExtra("post user profile",model.getUserProfileImageUrl());
+                        }
+                        else {
+                            in.putExtra("post user profile",R.drawable.dp);
+                        }
+
+                        in.putExtra("post date",timeAgo);
+                        in.putExtra("post image url",model.getPostImageUrl());
+                        in.putExtra("user name",model.getUserName());
+                        in.putExtra("post desc",model.getPostDesc());
+                        in.putExtra("user Id",mUser.getUid());
+//                        in.putExtra("post total like",model.);
+
+
+
+                        startActivity(in);
+                    }
+                });
+
+
 
 
             }
@@ -220,65 +267,77 @@ public class Blog extends AppCompatActivity {
             @NonNull
             @Override
             public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.single_post,parent,false);
+                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.only_post,parent,false);
 
                 return new myViewHolder(view);
             }
-        }  ;
+
+          //   @Override
+//             public int getItemCount() {
+//                 return spacecrafts.size();
+//             }
+         }  ;
         adapter.startListening();
         recyclerView.setAdapter(adapter);
     }
 
-    private void LoadComment(String postKey) {
-
-        myViewHolder.recyclerViewComment.setLayoutManager(new LinearLayoutManager(Blog.this));
-        CommentOptions=new FirebaseRecyclerOptions.Builder<Comment>().setQuery(commentRef.child(postKey),Comment.class).build();
-        Commentadapter=new FirebaseRecyclerAdapter<Comment,CommentViewHolder>(CommentOptions) {
-            @Override
-            protected void onBindViewHolder(@NonNull CommentViewHolder holder, int position, @NonNull Comment model) {
-
-                holder.commentUserName.setText(model.getUserName());
-                holder.comment.setText(model.getComments());
-                Picasso.get().load(model.getUserProfileImageUrl()).into(holder.commentUserProfie);
-
-            }
-
-            @NonNull
-            @Override
-            public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.single_comment,parent,false);
-                return new CommentViewHolder(view);
-
-            }
-        };
-
-        Commentadapter.startListening();
-        myViewHolder.recyclerViewComment.setAdapter(Commentadapter);
-    }
-
-
-    private void AddComment(myViewHolder holder, String postKey, String uid, String comment) {
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        String strDate = formatter.format(date);
-        HashMap hashMap = new HashMap();
-        hashMap.put("UserProfileImageUrl", profileImageurl);
-        hashMap.put("userName", uname);
-        hashMap.put("comments", comment);
-        commentRef.child(postKey).child(uid+strDate).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
-            @Override
-            public void onComplete(@NonNull Task task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(Blog.this, "comment added", Toast.LENGTH_SHORT).show();
-                    adapter.notifyDataSetChanged();
-                    holder.input_comment.setText(null);
-                }
-                else {
-                    Toast.makeText(Blog.this, ""+task.getException().toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+//    private void LoadComment(String postKey) {
+//
+//        myViewHolder.recyclerViewComment.setLayoutManager(new LinearLayoutManager(Blog.this));
+//        CommentOptions=new FirebaseRecyclerOptions.Builder<Comment>().setQuery(commentRef.child(postKey),Comment.class).build();
+//        Commentadapter=new FirebaseRecyclerAdapter<Comment,CommentViewHolder>(CommentOptions) {
+//            @Override
+//            protected void onBindViewHolder(@NonNull CommentViewHolder holder, int position, @NonNull Comment model) {
+//
+//                holder.commentUserName.setText(model.getUserName());
+//                holder.comment.setText(model.getComments());
+//                if(model.getUserProfileImageUrl()== null)
+//                {
+//                    Picasso.get().load(R.drawable.dp).into(holder.commentUserProfile);
+//                }
+//                else {
+//                    Picasso.get().load(model.getUserProfileImageUrl()).into(holder.commentUserProfile);
+//                }
+//
+//
+//            }
+//
+//            @NonNull
+//            @Override
+//            public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.single_comment,parent,false);
+//                return new CommentViewHolder(view);
+//
+//            }
+//        };
+//
+//        Commentadapter.startListening();
+//        myViewHolder.recyclerViewComment.setAdapter(Commentadapter);
+//    }
+//
+//
+//    private void AddComment(myViewHolder holder, String postKey, String uid, String comment) {
+//        Date date = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+//        String strDate = formatter.format(date);
+//        HashMap hashMap = new HashMap();
+//        hashMap.put("UserProfileImageUrl", profileImageurl);
+//        hashMap.put("userName", uname);
+//        hashMap.put("comments", comment);
+//        commentRef.child(postKey).child(uid+strDate).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+//            @Override
+//            public void onComplete(@NonNull Task task) {
+//                if(task.isSuccessful()){
+//                    Toast.makeText(Blog.this, "comment added", Toast.LENGTH_SHORT).show();
+//                    adapter.notifyDataSetChanged();
+//                    holder.input_comment.setText(null);
+//                }
+//                else {
+//                    Toast.makeText(Blog.this, ""+task.getException().toString(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
 
     private String calculateTime(String datePost) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
@@ -313,6 +372,8 @@ public class Blog extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 profileImageurl = snapshot.child("Profile_Image").getValue(String.class);
                 uname = snapshot.child("userName").getValue(String.class);
+
+
             }
 
             @Override
@@ -321,6 +382,7 @@ public class Blog extends AppCompatActivity {
             }
 
         });
+
     }
 
 
@@ -387,7 +449,7 @@ public class Blog extends AppCompatActivity {
                             hashMap.put("UserProfileImageUrl", profileImageurl);
                             hashMap.put("userName", uname);
 
-                             Toast.makeText(Blog.this,"postImageUrl "+uri.toString(),Toast.LENGTH_SHORT).show();
+                           //  Toast.makeText(Blog.this,"postImageUrl "+uri.toString(),Toast.LENGTH_SHORT).show();
 
                             PostRef.child(mUser.getUid() + strDate).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
                                 @Override

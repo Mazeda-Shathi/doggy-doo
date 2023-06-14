@@ -17,7 +17,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="180dp"
+                android:layout_marginTop="30dp"
                 android:text="Registration"
                 android:textSize="25dp"
                 android:textStyle="bold"
@@ -56,6 +56,65 @@
                 android:backgroundTint="#148F77"
                 android:inputType="number"
                 android:ems="10"/>
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+                  <TextView
+                      android:id="@+id/districtTextView"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="District"
+                      android:layout_marginStart="80dp"
+                      android:layout_marginVertical="10dp"
+                      android:textColor="#555555"
+                      android:focusable="true"
+                      android:focusableInTouchMode="true">
+                  </TextView>
+
+                  <Spinner
+                      android:id="@+id/spinnerBangladeshState"
+                      android:layout_width="wrap_content"
+                      android:layout_height="50dp"
+                      android:layout_marginLeft="80dp"
+                      android:layout_marginTop="10dp"
+
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintHorizontal_bias="0.497"
+                      app:layout_constraintStart_toStartOf="parent"
+
+                      app:layout_constraintTop_toBottomOf="@+id/RegPNum"></Spinner>
+
+
+
+                  <TextView
+                      android:id="@+id/thanaTextView"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Thana"
+                      android:layout_marginStart="80dp"
+                      android:layout_marginVertical="10dp"
+                      android:textColor="#555555"
+                      android:focusable="true"
+                      android:focusableInTouchMode="true">
+                  </TextView>
+                  <Spinner
+                      android:id="@+id/spinnerBangladeshDistrict"
+                      android:layout_width="wrap_content"
+                      android:layout_height="36dp"
+                      android:layout_marginLeft="80dp"
+                      android:layout_marginTop="10dp"
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintHorizontal_bias="0.497"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintTop_toBottomOf="@+id/spinnerBangladeshState">
+
+                  </Spinner>
+
+
+
+          </LinearLayout>
 
             <EditText
                 android:id="@+id/RegEmail"

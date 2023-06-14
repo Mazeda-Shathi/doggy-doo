@@ -51,10 +51,6 @@ public class MainActivity extends AppCompatActivity  {
             finish();
         }
 
-//        if(!isInternetConnected(this)){
-//            Toast.makeText(MainActivity.this, "no", Toast.LENGTH_SHORT).show();
-//            showCustomDialog();
-//        }
             new Handler().postDelayed(new Runnable() {
 
                 @Override
@@ -62,13 +58,12 @@ public class MainActivity extends AppCompatActivity  {
 
                     if (mUser != null) {
 
-                        //Toast.makeText(MainActivity.this,"dis"+s,Toast.LENGTH_SHORT).show();
                         mRef.child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.exists()) {
 
-                                    Intent intent = new Intent(MainActivity.this, HomePage.class);
+                                    Intent intent = new Intent(MainActivity.this, Login.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
@@ -85,7 +80,7 @@ public class MainActivity extends AppCompatActivity  {
                         });
                     }
 
-
+//for session login
                     else {
                         Intent intent;
                         intent = new Intent(getApplicationContext(), Login.class);
@@ -93,42 +88,11 @@ public class MainActivity extends AppCompatActivity  {
                         finish();
                     }
                 }
-            }, 500);
+            }, 3500);
 
 
     }
 
-//    private void showCustomDialog() {
-//        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
-//        builder.setMessage("Please connect to the internet")
-//                .setCancelable(false)
-//                .setPositiveButton("Connect", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-//                    }
-//                })
-//                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        Intent in=new Intent(MainActivity.this,no_Internet.class);
-//                        startActivity(in);
-//                        finish();
-//                    }
-//                });
-//    }
-//
-//    private boolean isInternetConnected(MainActivity mainActivity) {
-//        ConnectivityManager connectivityManager=(ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-//        NetworkInfo wifiCon=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-//        NetworkInfo MobileCon=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-//        if((wifiCon !=null &&wifiCon.isConnected()) || (MobileCon !=null) && MobileCon.isConnected()){
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
-//    }
 
 
        private boolean isInternetConnected() {

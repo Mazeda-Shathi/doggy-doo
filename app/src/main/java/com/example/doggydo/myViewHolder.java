@@ -1,10 +1,12 @@
 package com.example.doggydo;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,28 +22,32 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class myViewHolder extends RecyclerView.ViewHolder {
     CircleImageView ProfileImage;
-    ImageView postImage,likeImage,commentLogo,commentSend,dislike;
-    TextView userName,timeAgo,postDesc,totalLike,totalComment,totalDislike;
+    ImageView postImage,likeImage,commentImage,commentSend,dislike;
+    public TextView userName;
+    TextView timeAgo;
+    TextView postDesc;
+    TextView totalLike;
+    TextView totalComment;
+    TextView totalDislike;
     EditText input_comment;
     public static RecyclerView recyclerViewComment;
     public myViewHolder(@NonNull View itemView) {
 
         super(itemView);
-
         ProfileImage=itemView.findViewById(R.id.single_post_userImage);
         postDesc=itemView.findViewById(R.id.postDesc);
         userName=itemView.findViewById(R.id.postUserName);
         timeAgo=itemView.findViewById(R.id.postingTime);
         likeImage=itemView.findViewById(R.id.likeImage);
         dislike=itemView.findViewById(R.id.dislikeImage);
-        commentLogo=itemView.findViewById(R.id.commentImage);
        totalLike=itemView.findViewById(R.id.totalLike);
         totalDislike=itemView.findViewById(R.id.totaldislike);
         totalComment=itemView.findViewById(R.id.Totalcomment);
        postImage=itemView.findViewById(R.id.PostImage);
        commentSend=itemView.findViewById(R.id.sendCommentId);
        input_comment=itemView.findViewById(R.id.writeCommentId);
-       recyclerViewComment=itemView.findViewById(R.id.commentRecyclerViewId);
+       commentImage=itemView.findViewById(R.id.commentImage);
+     //  recyclerViewComment=itemView.findViewById(R.id.commentRecyclerViewId);
 
 
     }

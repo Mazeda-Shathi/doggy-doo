@@ -59,6 +59,14 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="17dp"></Button>
+    <CheckBox
+
+            android:id="@+id/remindId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Remember me" />
+
 
 
     <TextView

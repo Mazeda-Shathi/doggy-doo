@@ -4,28 +4,50 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.doggydo.Utills.Posts;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
     Menu menu;
-    TextView textView;
+    CardView classifyCard,AllBreedCard,BlogCard,historyCard;
+ String drawerUserName,proImgDrawerUl;
+ CircleImageView drawerProfile;
+ TextView drawerUserTv;
+   FirebaseAuth mAuth;
+   FirebaseUser mUser;
+ DatabaseReference mRef;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +56,20 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         /*---------------------Hooks------------------------*/
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        //  textView=findViewById(R.id.textView);
+        View view=navigationView.inflateHeaderView(R.layout.header);
+//       drawerUserTv=view.findViewById(R.id.drawerUsername);
+//       drawerProfile=view.findViewById(R.id.proImage_drawer);
         toolbar = findViewById(R.id.toolbar);
-
-        //hide or show menuitem
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        mRef = FirebaseDatabase.getInstance().getReference().child("UserDetails");
+        classifyCard=findViewById(R.id.classifYId);
+        BlogCard=findViewById(R.id.blogId);
+        AllBreedCard=findViewById(R.id.allBreedId);
         menu = navigationView.getMenu();
-//        menu.findItem(R.id.nav_logOut).setVisible(false);
-//        menu.findItem(R.id.nav_prfoile).setVisible(false);
+
+
+
 
 //navigation drawer menu
         navigationView.bringToFront();
@@ -51,11 +80,63 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
 
+        classifyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in=new Intent(HomePage.this,classify.class);
+                startActivity(in);
+            }
+        });
+        AllBreedCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in=new Intent(HomePage.this,tryWebview.class);
+                startActivity(in);
 
+            }
+        });
+        BlogCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in=new Intent(HomePage.this,Blog.class);
+                startActivity(in);
+            }
+        });
 
     }
 
-
+    //@Override
+//    protected void onStart() {
+//        super.onStart();
+//        String uId=mUser.getUid();
+//
+//        mRef.child(uId).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                if(snapshot.exists()){
+//                    drawerUserName=snapshot.child("userName").getValue(String.class);
+//                    proImgDrawerUl=snapshot.child("Profile_Image").getValue(String.class);
+//                   drawerUserTv.setText(drawerUserName);
+//                    if(proImgDrawerUl== null)
+//                    {
+//                       drawerProfile.setImageResource(R.drawable.dp);
+//                    }
+//                    else {
+//                        Picasso.get().load(proImgDrawerUl).into(drawerProfile);
+//                    }
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(HomePage.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//    }
 
     @Override
     public void onBackPressed(){
@@ -73,8 +154,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.nav_home:
                 break;
             case R.id.nav_classify:
-                Intent intent=new Intent(HomePage.this,classify.class);
-                startActivity(intent);
+                Intent in=new Intent(HomePage.this,classify.class);
+                startActivity(in);
                 break;
 
             case R.id.nav_petCare:
@@ -86,9 +167,11 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(intent3);
                 break;
             case R.id.nav_logOut:
-                FirebaseAuth.getInstance().signOut();
-                Intent intent4=new Intent(HomePage.this,Login.class);
-                startActivity(intent4);
+                SharedPreferences preferences=getSharedPreferences("checkbox",MODE_PRIVATE);
+                SharedPreferences.Editor editor=preferences.edit();
+                editor.putString("remember","false");
+                editor.apply();
+               finish();
                 break;
             case R.id.nav_prfoile:
                 Intent intent5=new Intent(HomePage.this,Profile.class);
@@ -98,6 +181,11 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 Intent intent6=new Intent(HomePage.this,Blog.class);
                 startActivity(intent6);
                 break;
+            case R.id.nav_rateUS:
+                Intent intent7=new Intent(HomePage.this,RateUs.class);
+                startActivity(intent7);
+                break;
+
 
 
         }

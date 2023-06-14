@@ -5,6 +5,13 @@ plugins {
 
 android {
     compileSdk 32
+    //for sass
+//    sourceSets{
+//        main{
+//            assets.srcDirs=['src/main/assets']
+//        }
+//    }
+
 
     defaultConfig {
         applicationId "com.example.doggydo"
@@ -66,6 +73,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.8'
 
     implementation 'com.firebaseui:firebase-ui-database:8.0.2'
+
 
 
 

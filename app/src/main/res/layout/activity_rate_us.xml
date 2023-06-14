@@ -5,5 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RateUs">
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="296dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:progressTint="#FFD700"
+        android:rating="0"
+        android:secondaryProgressTint="@android:color/transparent"
+
+        />
+
+    <Button
+        android:id="@+id/ratingSubmitButtonId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="8dp"
+        android:text="submit"
+        app:layout_constraintStart_toStartOf="@id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@id/ratingBar"
+        tools:ignore="MissingConstraints" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
