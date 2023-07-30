@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "Boxer",
+    "Size": "Males typically stand 22.5 to 25 inches tall at the shoulder and weight about 70 pounds.Females typically stand 21 to 23.5 inches tall at the shoulder and weight abput 60 pounds",
+    "Also_known-as": "Boxer puppy",
+    "Description": "Boxer  are high-energy dogs and need a lot of exercise",
+    "image_name": "boxer"
+  },
+  {
+    "Name": "French Bulldog",
+    "Size": "Typically stand 11 to 12 inches tall .Males weight about 20 to 28 pounds.Females weight about 16-24 pounds",
+    "Also_known-as": "Buttons,Squishy",
+    "Description": "French-bulldogs do not need a lot of exercise,but try to need daily walks to keep them at a healthy weight",
+    "image_name": "french-bulldog"
+  }
+
+]

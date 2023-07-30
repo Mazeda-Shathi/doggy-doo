@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".History">
+
+    <ImageView
+        android:id="@+id/classifiedDogImageId"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/user_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="117dp">
+
+    </ImageView>
+
+    <TextView
+
+        android:id="@+id/predictedDogNameId"
+        android:layout_width="318dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/classifiedDogImageId"
+        tools:layout_editor_absoluteX="61dp"
+        android:background="@color/teal_200"
+        tools:ignore="MissingConstraints">
+    </TextView>
+    <TextView
+        android:id="@+id/predictionProbabilityID"
+        android:layout_width="318dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/predictedDogNameId"
+        tools:layout_editor_absoluteX="61dp"
+        android:background="@color/teal_200"
+
+        tools:ignore="MissingConstraints">
+    </TextView>
+
+    <Button
+        android:id="@+id/previousPageId"
+        android:layout_width="131dp"
+        android:layout_height="56dp"
+        android:text="Previous"
+        tools:ignore="MissingConstraints"
+       android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/predictionProbabilityID">
+
+    </Button>
+
+    <Button
+        android:id="@+id/nextPageId"
+        android:layout_width="131dp"
+        android:layout_height="56dp"
+        android:text="Next"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintStart_toEndOf="@+id/previousPageId"
+        android:layout_marginStart="30dp"
+        tools:layout_editor_absoluteX="248dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/predictionProbabilityID">
+
+    </Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

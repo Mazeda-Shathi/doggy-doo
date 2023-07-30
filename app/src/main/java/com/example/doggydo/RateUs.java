@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -45,6 +46,7 @@ public class RateUs extends AppCompatActivity {
         RatingBar simpleRatingBar = (RatingBar) findViewById(R.id.ratingBar); // initiate a rating bar
 
         Button submitButton=findViewById(R.id.ratingSubmitButtonId);
+        Button CancelButton=findViewById(R.id.ratingCancelButtonId);
         mAuth= FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         rootnode = FirebaseDatabase.getInstance();
@@ -57,7 +59,6 @@ public class RateUs extends AppCompatActivity {
 
                     String rate=snapshot.child("ratingpoint").getValue(String.class);
                     float r=Float.parseFloat(rate);
-                    Toast.makeText(RateUs.this,rate, Toast.LENGTH_SHORT).show();
                     submitButton.setEnabled(false);
 
                 }
@@ -78,9 +79,22 @@ public class RateUs extends AppCompatActivity {
 
                 rating=String.valueOf(simpleRatingBar.getRating());
 //                Float ratingNumber = simpleRatingBar.getRating();
-                Toast.makeText(getApplicationContext(),  rating, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Thanks for your rating", Toast.LENGTH_LONG).show();
                 saveRatingInDatabase();
+                Intent intent;
+                intent = new Intent(getApplicationContext(), HomePage
+                        .class);
+                startActivity(intent);
 
+            }
+        });
+        CancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                intent = new Intent(getApplicationContext(), HomePage
+                        .class);
+                startActivity(intent);
             }
         });
 

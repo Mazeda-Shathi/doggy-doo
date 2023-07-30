@@ -103,27 +103,27 @@
 
 
     </androidx.recyclerview.widget.RecyclerView>
-<!--        <LinearLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content">-->
-<!--            <Button-->
-<!--                android:id="@+id/previousBtnId"-->
-<!--                android:layout_width="70dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:layout_marginEnd="20dp"-->
-<!--                android:text="Previous"-->
-<!--                >-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/previousBtnId"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:text="Previous"
+                >
 
-<!--            </Button>-->
-<!--            <Button-->
-<!--                android:id="@+id/NextBtnId"-->
-<!--                android:layout_width="70dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:text="Next"-->
-<!--                >-->
+            </Button>
+            <Button
+                android:id="@+id/NextBtnId"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:text="Next"
+                >
 
-<!--            </Button>-->
-<!--        </LinearLayout>-->
+            </Button>
+        </LinearLayout>
        <TextView
            android:layout_width="match_parent"
            android:layout_height="20dp"

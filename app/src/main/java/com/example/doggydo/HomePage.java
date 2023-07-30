@@ -67,6 +67,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         BlogCard=findViewById(R.id.blogId);
         AllBreedCard=findViewById(R.id.allBreedId);
         menu = navigationView.getMenu();
+        historyCard=findViewById(R.id.historyId);
 
 
 
@@ -87,10 +88,17 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(in);
             }
         });
+        historyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in=new Intent(HomePage.this,History.class);
+                startActivity(in);
+            }
+        });
         AllBreedCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in=new Intent(HomePage.this,tryWebview.class);
+                Intent in=new Intent(HomePage.this,All_Breed.class);
                 startActivity(in);
 
             }
@@ -172,6 +180,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 editor.putString("remember","false");
                 editor.apply();
                finish();
+                Intent intent4=new Intent(HomePage.this,Login.class);
+                startActivity(intent4);
                 break;
             case R.id.nav_prfoile:
                 Intent intent5=new Intent(HomePage.this,Profile.class);
@@ -185,6 +195,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 Intent intent7=new Intent(HomePage.this,RateUs.class);
                 startActivity(intent7);
                 break;
+
 
 
 

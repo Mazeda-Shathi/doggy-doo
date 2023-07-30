@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class UpdateProfileImage extends AppCompatActivity {
     Button btnUpdate,btnSkip;
     FirebaseAuth mAuth;
     DatabaseReference mRef;
+    ProgressDialog mloadingBar;
     FirebaseUser mUser;
     Uri imguri;
 
@@ -49,6 +51,8 @@ public class UpdateProfileImage extends AppCompatActivity {
         Proimg=findViewById(R.id.profile_image);
         btnUpdate=findViewById(R.id.btnUpdate);
         btnSkip=findViewById(R.id.btnSkip);
+
+        mloadingBar = new ProgressDialog(this);
 
         mAuth= FirebaseAuth.getInstance();
         mUser=mAuth.getCurrentUser();
@@ -65,8 +69,14 @@ public class UpdateProfileImage extends AppCompatActivity {
             }
         });
         btnUpdate.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
+
+                mloadingBar.setTitle("Profile updated");
+                mloadingBar.setCanceledOnTouchOutside(false);
+                mloadingBar.show();
                 String uId= FirebaseAuth.getInstance().getCurrentUser().getUid();
 //
                 storageRef.child(uId).putFile(imguri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -75,9 +85,8 @@ public class UpdateProfileImage extends AppCompatActivity {
                         storageRef.child(mUser.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-//                            mloadingBar.setTitle("Wait");
-//                mloadingBar.setCanceledOnTouchOutside(false);
-//                mloadingBar.show();
+
+
                                 HashMap hashMap=new HashMap();
                                 hashMap.put("Profile_Image",uri.toString());
 
@@ -91,7 +100,7 @@ public class UpdateProfileImage extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Object o) {
 //                                    mloadingBar.dismiss();
-                                        Toast.makeText(UpdateProfileImage.this,"img added",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(UpdateProfileImage.this,"Updated",Toast.LENGTH_SHORT).show();
                                         Intent intent=new Intent(UpdateProfileImage.this,Profile.class);
                                         startActivity(intent);
 

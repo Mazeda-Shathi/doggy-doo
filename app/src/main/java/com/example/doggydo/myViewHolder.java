@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
@@ -30,6 +31,7 @@ public class myViewHolder extends RecyclerView.ViewHolder {
     TextView totalComment;
     TextView totalDislike;
     EditText input_comment;
+    DatabaseReference likeRef,PostRef,dislikeRef;
     public static RecyclerView recyclerViewComment;
     public myViewHolder(@NonNull View itemView) {
 
@@ -40,15 +42,17 @@ public class myViewHolder extends RecyclerView.ViewHolder {
         timeAgo=itemView.findViewById(R.id.postingTime);
         likeImage=itemView.findViewById(R.id.likeImage);
         dislike=itemView.findViewById(R.id.dislikeImage);
-       totalLike=itemView.findViewById(R.id.totalLike);
+        totalLike=itemView.findViewById(R.id.totalLike);
         totalDislike=itemView.findViewById(R.id.totaldislike);
         totalComment=itemView.findViewById(R.id.Totalcomment);
-       postImage=itemView.findViewById(R.id.PostImage);
-       commentSend=itemView.findViewById(R.id.sendCommentId);
-       input_comment=itemView.findViewById(R.id.writeCommentId);
-       commentImage=itemView.findViewById(R.id.commentImage);
+        postImage=itemView.findViewById(R.id.PostImage);
+        commentSend=itemView.findViewById(R.id.sendCommentId);
+        input_comment=itemView.findViewById(R.id.writeCommentId);
+        commentImage=itemView.findViewById(R.id.commentImage);
      //  recyclerViewComment=itemView.findViewById(R.id.commentRecyclerViewId);
-
+        PostRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        likeRef = FirebaseDatabase.getInstance().getReference().child("Like");
+        dislikeRef = FirebaseDatabase.getInstance().getReference().child("DisLike");
 
     }
 
@@ -144,6 +148,95 @@ public class myViewHolder extends RecyclerView.ViewHolder {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void likeSet(String postKey, String uid) {
+        likeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                likeRef.child(postKey).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            likeRef.child(postKey).child(uid).removeValue();
+                           likeImage.setColorFilter(Color.BLACK);
+
+                        }
+                        else {
+                            likeRef.child(postKey).child(uid).setValue("like");
+                            likeImage.setColorFilter(Color.BLUE);
+
+                            dislikeRef.child(postKey).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.exists()){
+                                        dislikeRef.child(postKey).child(uid).removeValue();
+                                        dislike.setColorFilter(Color.BLACK);
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+
+                    }
+                });
+
+
+            }
+        });
+    }
+    public void dislikeSet(String postKey, String uid) {
+        dislike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dislikeRef.child(postKey).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            dislikeRef.child(postKey).child(uid).removeValue();
+                            dislike.setColorFilter(Color.BLACK);
+
+                        } else {
+                            dislikeRef.child(postKey).child(uid).setValue("Dislike");
+                           dislike.setColorFilter(Color.BLUE);
+
+                            likeRef.child(postKey).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        likeRef.child(postKey).child(uid).removeValue();
+                                       likeImage.setColorFilter(Color.BLACK);
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
             }
         });

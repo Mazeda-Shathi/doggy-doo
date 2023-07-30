@@ -110,9 +110,7 @@ public class details_blog extends AppCompatActivity {
         final String time_ago = intent.getExtras().getString("post date");
 
 
-//        final String total_like=intent.getExtras().getString("post desc");
-//        final String total_dislike=intent.getExtras().getString("post desc");
-//        final String total_comment=intent.getExtras().getString("post desc");
+
         final String post_image = intent.getExtras().getString("post image url");
         //set post data
         userName.setText(userN);
@@ -130,6 +128,7 @@ public class details_blog extends AppCompatActivity {
             }
         });
 
+
         LoadComment(postKey);
         countLike(postKey, uId, likeRef);
         countDislike(postKey, uId, dislikeRef);
@@ -137,6 +136,8 @@ public class details_blog extends AppCompatActivity {
 
 
     }
+
+
 
     public void countComment(String postKey, String uid, DatabaseReference commentRef) {
         commentRef.child(postKey).addValueEventListener(new ValueEventListener() {
@@ -312,6 +313,11 @@ public class details_blog extends AppCompatActivity {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_comment, parent, false);
                 return new CommentViewHolder(view);
 
+            }
+
+            @Override
+            public int getItemCount() {
+                return super.getItemCount();
             }
         };
 

@@ -17,6 +17,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,15 +65,19 @@ public class Blog extends AppCompatActivity {
     Uri imguri = null;
 
     String profileImageurl, uname;
+    String key = null, startKey = null;
     EditText inputPostDescription;
     RecyclerView recyclerView;
     FirebaseRecyclerAdapter<Posts,myViewHolder> adapter;
     FirebaseRecyclerOptions<Posts> options;
     FirebaseRecyclerAdapter<Comment,CommentViewHolder> Commentadapter;
     FirebaseRecyclerOptions<Comment> CommentOptions;
+    Button prevBtn,NextBtn;
+
 
 
     int REQUEST_CODE = 10;
+
 
 
     @Override
@@ -93,13 +98,15 @@ public class Blog extends AppCompatActivity {
         likeRef = FirebaseDatabase.getInstance().getReference().child("Like");
         dislikeRef = FirebaseDatabase.getInstance().getReference().child("DisLike");
         commentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
-
         storage = FirebaseStorage.getInstance();
         postImageRef = storage.getReference().child("PostImage");
+
 
         sendImagePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 AddPost();
             }
         });
@@ -114,8 +121,16 @@ public class Blog extends AppCompatActivity {
         });
         recyclerView=findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        LoadPost();
+        prevBtn=findViewById(R.id.previousBtnId);
+        NextBtn=findViewById(R.id.NextBtnId);
+
+       LoadPost();
+
     }
+
+
+
+
 
     private void LoadPost() {
 
@@ -133,7 +148,14 @@ public class Blog extends AppCompatActivity {
                 holder.CountLike(postKey,mUser.getUid(),likeRef);
                 holder.CountDislike(postKey,mUser.getUid(),dislikeRef);
                 holder.CountComment(postKey,mUser.getUid(),commentRef);
-                if(model.getPostImageUrl() !="") {
+                holder.likeSet(postKey,mUser.getUid());
+                holder.dislikeSet(postKey,mUser.getUid());
+                if(model.getPostImageUrl()==null){
+                    holder.postImage.setVisibility(View.GONE);
+                }
+
+              else  if(model.getPostImageUrl() !="") {
+                    holder.postImage.setVisibility(View.VISIBLE);
                     Picasso.get().load(model.getPostImageUrl()).into(holder.postImage);
                 }
                 if(model.getUserProfileImageUrl()==null)
@@ -145,92 +167,6 @@ public class Blog extends AppCompatActivity {
                     Picasso.get().load(model.getUserProfileImageUrl()).into(holder.ProfileImage);
                 }
 
-               holder.likeImage.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       likeRef.child(postKey).child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                           @Override
-                           public void onDataChange(@NonNull DataSnapshot snapshot) {
-                               if(snapshot.exists()){
-                                   likeRef.child(postKey).child(mUser.getUid()).removeValue();
-                                   holder.likeImage.setColorFilter(Color.BLACK);
-                                   notifyDataSetChanged();
-                               }
-                               else {
-                                   likeRef.child(postKey).child(mUser.getUid()).setValue("like");
-                                   holder.likeImage.setColorFilter(Color.BLUE);
-
-                                   dislikeRef.child(postKey).child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                       @Override
-                                       public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                           if(snapshot.exists()){
-                                               dislikeRef.child(postKey).child(mUser.getUid()).removeValue();
-                                               holder.dislike.setColorFilter(Color.BLACK);
-                                               notifyDataSetChanged();
-                                           }
-                                       }
-
-                                       @Override
-                                       public void onCancelled(@NonNull DatabaseError error) {
-
-                                       }
-                                   });
-                                   notifyDataSetChanged();
-                               }
-                           }
-
-                           @Override
-                           public void onCancelled(@NonNull DatabaseError error) {
-                               Toast.makeText(Blog.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                           }
-                       });
-
-                   }
-               });
-                holder.dislike.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                       dislikeRef.child(postKey).child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(snapshot.exists()){
-                                    dislikeRef.child(postKey).child(mUser.getUid()).removeValue();
-                                    holder.dislike.setColorFilter(Color.BLACK);
-                                    notifyDataSetChanged();
-                                }
-                                else {
-                                    dislikeRef.child(postKey).child(mUser.getUid()).setValue("Dislike");
-                                    holder.dislike.setColorFilter(Color.BLUE);
-                                    notifyDataSetChanged();
-                                  likeRef.child(postKey).child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if(snapshot.exists()){
-                                            likeRef.child(postKey).child(mUser.getUid()).removeValue();
-                                                holder.likeImage.setColorFilter(Color.BLACK);
-                                                notifyDataSetChanged();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Toast.makeText(Blog.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-
-                    }
-                });
                 holder.commentImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -250,16 +186,9 @@ public class Blog extends AppCompatActivity {
                         in.putExtra("user name",model.getUserName());
                         in.putExtra("post desc",model.getPostDesc());
                         in.putExtra("user Id",mUser.getUid());
-//                        in.putExtra("post total like",model.);
-
-
-
                         startActivity(in);
                     }
                 });
-
-
-
 
             }
 
@@ -272,72 +201,12 @@ public class Blog extends AppCompatActivity {
                 return new myViewHolder(view);
             }
 
-          //   @Override
-//             public int getItemCount() {
-//                 return spacecrafts.size();
-//             }
          }  ;
         adapter.startListening();
         recyclerView.setAdapter(adapter);
     }
 
-//    private void LoadComment(String postKey) {
-//
-//        myViewHolder.recyclerViewComment.setLayoutManager(new LinearLayoutManager(Blog.this));
-//        CommentOptions=new FirebaseRecyclerOptions.Builder<Comment>().setQuery(commentRef.child(postKey),Comment.class).build();
-//        Commentadapter=new FirebaseRecyclerAdapter<Comment,CommentViewHolder>(CommentOptions) {
-//            @Override
-//            protected void onBindViewHolder(@NonNull CommentViewHolder holder, int position, @NonNull Comment model) {
-//
-//                holder.commentUserName.setText(model.getUserName());
-//                holder.comment.setText(model.getComments());
-//                if(model.getUserProfileImageUrl()== null)
-//                {
-//                    Picasso.get().load(R.drawable.dp).into(holder.commentUserProfile);
-//                }
-//                else {
-//                    Picasso.get().load(model.getUserProfileImageUrl()).into(holder.commentUserProfile);
-//                }
-//
-//
-//            }
-//
-//            @NonNull
-//            @Override
-//            public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.single_comment,parent,false);
-//                return new CommentViewHolder(view);
-//
-//            }
-//        };
-//
-//        Commentadapter.startListening();
-//        myViewHolder.recyclerViewComment.setAdapter(Commentadapter);
-//    }
-//
-//
-//    private void AddComment(myViewHolder holder, String postKey, String uid, String comment) {
-//        Date date = new Date();
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-//        String strDate = formatter.format(date);
-//        HashMap hashMap = new HashMap();
-//        hashMap.put("UserProfileImageUrl", profileImageurl);
-//        hashMap.put("userName", uname);
-//        hashMap.put("comments", comment);
-//        commentRef.child(postKey).child(uid+strDate).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
-//            @Override
-//            public void onComplete(@NonNull Task task) {
-//                if(task.isSuccessful()){
-//                    Toast.makeText(Blog.this, "comment added", Toast.LENGTH_SHORT).show();
-//                    adapter.notifyDataSetChanged();
-//                    holder.input_comment.setText(null);
-//                }
-//                else {
-//                    Toast.makeText(Blog.this, ""+task.getException().toString(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//    }
+
 
     private String calculateTime(String datePost) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
@@ -353,8 +222,6 @@ public class Blog extends AppCompatActivity {
         }
         return "";
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -388,12 +255,7 @@ public class Blog extends AppCompatActivity {
 
     private void AddPost() {
         String postDesc = inputPostDescription.getText().toString();
-        if(imguri==null){
-            Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
-
-        }
-
-       else if (postDesc.isEmpty()) {
+       if (postDesc.isEmpty()) {
             inputPostDescription.setError("Please write something in  post description");
 
         } else {
@@ -412,9 +274,12 @@ public class Blog extends AppCompatActivity {
             HashMap hashMap = new HashMap();
             hashMap.put("datePost", strDate);
             hashMap.put("postDesc", postDesc);
-            hashMap.put("postImageUrl", "");
             hashMap.put("UserProfileImageUrl", profileImageurl);
             hashMap.put("userName", uname);
+            if(imguri!=null)
+            {
+                hashMap.put("postImageUrl", "");
+            }
 
             //  Toast.makeText(Profile.this,"name "+name,Toast.LENGTH_SHORT).show();
 
@@ -445,10 +310,12 @@ public class Blog extends AppCompatActivity {
                             HashMap hashMap = new HashMap();
                             hashMap.put("datePost", strDate);
                             hashMap.put("postDesc", postDesc);
-                            hashMap.put("postImageUrl", uri.toString());
                             hashMap.put("UserProfileImageUrl", profileImageurl);
                             hashMap.put("userName", uname);
-
+                            if(uri!=null)
+                            {
+                                hashMap.put("postImageUrl", uri.toString());
+                            }
                            //  Toast.makeText(Blog.this,"postImageUrl "+uri.toString(),Toast.LENGTH_SHORT).show();
 
                             PostRef.child(mUser.getUid() + strDate).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {

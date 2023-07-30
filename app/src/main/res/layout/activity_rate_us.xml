@@ -5,31 +5,108 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RateUs">
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="296dp"
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="450dp"
+        android:layout_marginTop="150dp"
+
+        android:orientation="horizontal"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:progressTint="#FFD700"
-        android:rating="0"
-        android:secondaryProgressTint="@android:color/transparent"
+        tools:ignore="MissingConstraints">
 
-        />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardId"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1">
+            <!--        <LinearLayout-->
+            <!--            android:id="@+id/rateLinearLayout"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            tools:ignore="InvalidId,Orientation"-->
+            <!--            android:orientation="vertical">-->
+            <RelativeLayout
 
-    <Button
-        android:id="@+id/ratingSubmitButtonId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="8dp"
-        android:text="submit"
-        app:layout_constraintStart_toStartOf="@id/ratingBar"
-        app:layout_constraintTop_toBottomOf="@id/ratingBar"
-        tools:ignore="MissingConstraints" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="34dp"
+                    android:layout_marginTop="99dp"
+                    android:text="How was your experience using this app?"
+                    android:textSize="22dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="200dp"
+                    android:progressTint="#FFC107"
+                    android:rating="0"
+                    android:secondaryProgressTint="@android:color/transparent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    />
+
+                <Button
+                    android:id="@+id/ratingSubmitButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="166dp"
+                    android:layout_marginBottom="82dp"
+                    android:backgroundTint="#2196F3"
+
+                    android:text="submit"
+                    android:textColor="#EEFFFFFF"
+                    app:layout_constraintStart_toStartOf="@id/ratingBar"
+                    app:layout_constraintTop_toBottomOf="@id/ratingBar"
+                    tools:ignore="MissingConstraints" />
+
+                <Button
+                    android:id="@+id/ratingCancelButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="62dp"
+                    android:layout_marginBottom="82dp"
+                    android:backgroundTint="#2196F3"
+
+                    android:text="Cancel"
+                    android:textColor="#EEFFFFFF"
+                    app:layout_constraintStart_toStartOf="@id/ratingBar"
+                    app:layout_constraintTop_toBottomOf="@id/ratingBar"
+                    tools:ignore="MissingConstraints" />
+
+            </RelativeLayout>
+
+
+            <!--            -->
+            <!--        </LinearLayout>-->
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
