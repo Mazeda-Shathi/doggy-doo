@@ -52,21 +52,11 @@ public class History extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 last= snapshot.child(useridGlobal).getChildrenCount();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        //for first data
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(useridGlobal ).child(String.valueOf(f)).child("DogClass").exists()) {
-                    classname = dataSnapshot.child(useridGlobal).child(String.valueOf(f)).child("DogClass").getValue().toString();
-                    prob = dataSnapshot.child(useridGlobal).child(String.valueOf(f)).child("Probability").getValue().toString();
-                    image = dataSnapshot.child(useridGlobal).child(String.valueOf(f)).child("DogImageUri").getValue().toString();
+                //for first data
+                if(snapshot.child(useridGlobal ).child(String.valueOf(f)).child("DogClass").exists()) {
+                    classname = snapshot.child(useridGlobal).child(String.valueOf(f)).child("DogClass").getValue().toString();
+                    prob = snapshot.child(useridGlobal).child(String.valueOf(f)).child("Probability").getValue().toString();
+                    image =snapshot.child(useridGlobal).child(String.valueOf(f)).child("DogImageUri").getValue().toString();
                     dogClassified.setText(classname);
                     probability.setText(prob);
                     Picasso.get().load(image).into(dogImage);
@@ -74,9 +64,8 @@ public class History extends AppCompatActivity {
 
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                // Handle possible errors.
             }
         });
 

@@ -11,17 +11,6 @@
 
 
 
-
-    <!--    <ImageView-->
-<!--        android:id="@+id/addimagePost"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="100dp"-->
-<!--        tools:layout_editor_absoluteX="155dp"-->
-<!--        tools:layout_editor_absoluteY="67dp"-->
-<!--        tools:ignore="MissingConstraints">-->
-
-
-<!--    </ImageView>-->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

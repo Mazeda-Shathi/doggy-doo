@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="448dp"
+        android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
         <ImageView
@@ -21,6 +22,7 @@
             android:layout_height="30dp">
 
         </TextView>
+
         <TextView
             android:id="@+id/id_model_breed_size"
             android:layout_width="match_parent"
