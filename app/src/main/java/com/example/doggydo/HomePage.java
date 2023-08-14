@@ -113,39 +113,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     }
 
-    //@Override
-//    protected void onStart() {
-//        super.onStart();
-//        String uId=mUser.getUid();
-//
-//        mRef.child(uId).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                if(snapshot.exists()){
-//                    drawerUserName=snapshot.child("userName").getValue(String.class);
-//                    proImgDrawerUl=snapshot.child("Profile_Image").getValue(String.class);
-//                   drawerUserTv.setText(drawerUserName);
-//                    if(proImgDrawerUl== null)
-//                    {
-//                       drawerProfile.setImageResource(R.drawable.dp);
-//                    }
-//                    else {
-//                        Picasso.get().load(proImgDrawerUl).into(drawerProfile);
-//                    }
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(HomePage.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//    }
-
     @Override
     public void onBackPressed(){
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
@@ -194,6 +161,11 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.nav_rateUS:
                 Intent intent7=new Intent(HomePage.this,RateUs.class);
                 startActivity(intent7);
+                break;
+
+            case R.id.nav_location:
+                Intent intent8=new Intent(HomePage.this,Location.class);
+                startActivity(intent8);
                 break;
 
 

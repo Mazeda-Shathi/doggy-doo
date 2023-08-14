@@ -5,33 +5,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AboutUs">
-    <fragment
-        android:id="@+id/map_view"
-        class="com.google.android.gms.maps.MapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        tools:ignore="MissingConstraints" />
+
+   <WebView
+       android:id="@+id/aboutUsWebview"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       tools:ignore="MissingConstraints"></WebView>
+   <LinearLayout
+       android:id="@+id/ratingLayout"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       app:layout_constraintTop_toBottomOf="@+id/aboutUsWebview"
+       tools:ignore="MissingConstraints">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/avgRatHead"
+           android:text="Present Rating"
+
+           android:textSize="18dp"
+           android:layout_marginVertical="20dp"
+          android:textColor="@color/teal_700"
+           android:layout_marginStart="50dp"
+           tools:ignore="MissingConstraints">
+
+       </TextView>
+       <TextView
+           android:id="@+id/showRating"
+           android:textColor="@color/black"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="4"
+           android:layout_marginVertical="20dp"
+           android:textSize="20dp"
+           app:layout_constraintTop_toBottomOf="@+id/avgRatHead"
+           android:layout_marginStart="40dp"
+           tools:ignore="MissingConstraints"></TextView>
+   </LinearLayout>
+    <LinearLayout
+        android:id="@+id/versionLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintTop_toBottomOf="@+id/ratingLayout"
+    tools:ignore="MissingConstraints">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/avgRatHead"
-        android:text="Avg rating"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/map_view"
+        android:id="@+id/versionnameId"
+        android:text="version code"
 
-        android:layout_marginStart="40dp"
+        android:textSize="18dp"
+
+        android:textColor="@color/teal_700"
+        android:layout_marginStart="50dp"
         tools:ignore="MissingConstraints">
 
     </TextView>
     <TextView
-        android:id="@+id/showRating"
+        android:id="@+id/versionNumber"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="4"
+        android:text="1.0"
+        android:textSize="20dp"
         app:layout_constraintTop_toBottomOf="@+id/avgRatHead"
         android:layout_marginStart="40dp"
         tools:ignore="MissingConstraints"></TextView>
+</LinearLayout>
+
+
+    <Button
+        android:id="@+id/moreAboutId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="More"
+        app:layout_constraintTop_toBottomOf="@+id/versionLayout"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="143dp"
+        tools:layout_editor_absoluteY="114dp">
+
+    </Button>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
