@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="448dp"
+        android:layout_height="200dp"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
@@ -14,11 +14,13 @@
             android:id="@+id/id_model_breed_img"
             android:layout_width="300dp"
             android:layout_height="100dp"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="40dp"></ImageView>
 
         <TextView
             android:id="@+id/id_model_breed_name"
             android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
             android:layout_height="30dp">
 
         </TextView>
@@ -26,6 +28,7 @@
         <TextView
             android:id="@+id/id_model_breed_size"
             android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
             android:layout_height="40dp">
 
         </TextView>

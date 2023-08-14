@@ -275,7 +275,7 @@ public class classify extends AppCompatActivity {
 
                     Photo_Uri=uri;
                     bitmapGlobal = bitmap;
-                    Toast.makeText(this, "uri is"+ uri, Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(this, "uri is"+ uri, Toast.LENGTH_SHORT).show();
 
                     storeHistoryOnDatabase();
                 }

@@ -3,6 +3,7 @@ package com.example.doggydo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -51,15 +52,25 @@ public class History extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                last= snapshot.child(useridGlobal).getChildrenCount();
-                //for first data
-                if(snapshot.child(useridGlobal ).child(String.valueOf(f)).child("DogClass").exists()) {
-                    classname = snapshot.child(useridGlobal).child(String.valueOf(f)).child("DogClass").getValue().toString();
-                    prob = snapshot.child(useridGlobal).child(String.valueOf(f)).child("Probability").getValue().toString();
-                    image =snapshot.child(useridGlobal).child(String.valueOf(f)).child("DogImageUri").getValue().toString();
-                    dogClassified.setText(classname);
-                    probability.setText(prob);
-                    Picasso.get().load(image).into(dogImage);
+                if(snapshot.exists())
+                {
+                    last= snapshot.child(useridGlobal).getChildrenCount();
+                    //for first data
+                    if(snapshot.child(useridGlobal ).child(String.valueOf(f)).child("DogClass").exists()) {
+                        classname = snapshot.child(useridGlobal).child(String.valueOf(f)).child("DogClass").getValue().toString();
+                        prob = snapshot.child(useridGlobal).child(String.valueOf(f)).child("Probability").getValue().toString();
+                        image =snapshot.child(useridGlobal).child(String.valueOf(f)).child("DogImageUri").getValue().toString();
+                        dogClassified.setText(classname);
+                        probability.setText(prob);
+                        Picasso.get().load(image).into(dogImage);
+
+                }
+//                    else
+//                    {
+//                        Intent i=new Intent(History.this,noHistory.class);
+//                        startActivity(i);
+//                    }
+
                 }
 
             }
