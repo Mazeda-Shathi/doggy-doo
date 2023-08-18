@@ -18,8 +18,6 @@ public interface JSONPlaceholder {
     @GET("posts")
     Call<List<Post>> getPost();
 
-//    @GET("comments")
-//    Call<List<Comment>> getComments(@Query("postId") int postId);
 
     @POST("posts")
     Call<Post> createPost(@Body Post post);

@@ -36,16 +36,7 @@ public class All_Breed extends AppCompatActivity {
         previous.setEnabled(false);
         this.binddata(currentpage);
         ListView listView = findViewById(R.id.Breed_gridview_id);
-//       Breed_info.add(new Breed_Info_Userhelper("boxer","21",R.drawable.boxer));
-//        Breed_info.add(new Breed_Info_Userhelper("boxer","21",R.drawable.boxer));
-//        Breed_info.add(new Breed_Info_Userhelper("boxer","21",R.drawable.boxer));
-//        Breed_info.add(new Breed_Info_Userhelper("boxer","21",R.drawable.boxer));
-//        Breed_info.add(new Breed_Info_Userhelper("boxer","21",R.drawable.boxer));
-//        Breed_info.add(new Breed_Info_Userhelper("boxer","21",R.drawable.boxer));
-//
-////        Breed_info.add(new get_("boxer","21",R.drawable.boxer));
-//        adapter = new Breed_CustomAdapter(this,Breed_info);
-//        listView.setAdapter(adapter);
+
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override

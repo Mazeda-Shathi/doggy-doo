@@ -5,11 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.Adapter;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -18,7 +15,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiActivity extends AppCompatActivity {
+public class postAPI extends AppCompatActivity {
     private RecyclerView recyclerView;
     JSONPlaceholder jsonPlaceholder;
 
@@ -46,18 +43,18 @@ public class ApiActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
                 if (!response.isSuccessful()){
-                    Toast.makeText(ApiActivity.this, response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(postAPI.this, response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 List<Post> postList = response.body();
-                PostAdapter postAdapter = new PostAdapter(ApiActivity.this , postList);
+                PostAdapter postAdapter = new PostAdapter(postAPI.this , postList);
                 recyclerView.setAdapter(postAdapter);
             }
 
             @Override
             public void onFailure(Call<List<Post>> call, Throwable t) {
 
-                Toast.makeText(ApiActivity.this, t.getMessage() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(postAPI.this, t.getMessage() , Toast.LENGTH_SHORT).show();
             }
         });
     }

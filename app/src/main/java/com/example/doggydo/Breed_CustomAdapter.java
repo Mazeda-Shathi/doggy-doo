@@ -41,6 +41,7 @@ public class Breed_CustomAdapter extends BaseAdapter {
         TextView name=v.findViewById(R.id.id_model_breed_name);
         TextView size=v.findViewById(R.id.id_model_breed_size);
         ImageView breed_img=v.findViewById(R.id.id_model_breed_img);
+        TextView breed_desc=v.findViewById(R.id.id_model_breed_description);
 
 
         //bind bigdata
@@ -49,6 +50,7 @@ public class Breed_CustomAdapter extends BaseAdapter {
         size.setText(Breed_Info.get(position).getSize());
         name.setText(Breed_Info.get(position).getName());
         breed_img.setImageResource(Breed_Info.get(position).getImg());
+        breed_desc.setText(Breed_Info.get(position).getDescription());
 //        breed_img.setImageResource(b.getImg());
 
         return v;

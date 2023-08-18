@@ -170,88 +170,6 @@ public class classify extends AppCompatActivity {
 
 
     }
-    public void storeHistoryOnDatabase() {
-//        //for keeping last node value in sharedpreference
-//
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("classification_history");
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                i= snapshot.child(useridGlobal).getChildrenCount();
-                i++;
-               // Log.d(String.valueOf(i) , "lastnodevalue");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-        //end for keeping last node value in sharedpreference
-
-        dog_image_storage_ref = FirebaseStorage.getInstance().getReference().child("dog_image");
-        classification_history_ref = FirebaseDatabase.getInstance().getReference().child("classification_history");//also be used to fetch postdata
-
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        String strDate = formatter.format(date);
-        dog_image_storage_ref.child(useridGlobal).child(String.valueOf(i)).putFile(Photo_Uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-
-
-                if(task.isSuccessful()){
-                    try {
-
-
-                        dog_image_storage_ref.child(useridGlobal).child(String.valueOf(i)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                //first put hashmap then into database
-
-
-                                HashMap hashMap = new HashMap();
-
-                                hashMap.put("DogImageUri", uri.toString());
-                                hashMap.put("DogClass", ClassName);
-                                hashMap.put("Probability", percentage);
-
-                                classification_history_ref.child(useridGlobal).child(String.valueOf(i)).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
-                                    @Override
-                                    public void onComplete(@NonNull Task task) {
-                                        if (task.isSuccessful()) {
-
-                                            //Toast.makeText(classify.this, "Post Added", Toast.LENGTH_SHORT).show();
-
-
-                                        } else {
-                                            Toast.makeText(classify.this, "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-
-
-                            }
-                        });
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-                else{
-
-                    Toast.makeText(classify.this, ""+task.getException().toString(), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-
-
-        });
-    }
 
     public int getMax(List<Category> prob){
         float max=0;
@@ -339,6 +257,89 @@ public class classify extends AppCompatActivity {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+    public void storeHistoryOnDatabase() {
+//        //for keeping last node value in sharedpreference
+//
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("classification_history");
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                i= snapshot.child(useridGlobal).getChildrenCount();
+                i++;
+                // Log.d(String.valueOf(i) , "lastnodevalue");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+        //end for keeping last node value in sharedpreference
+
+        dog_image_storage_ref = FirebaseStorage.getInstance().getReference().child("dog_image");
+        classification_history_ref = FirebaseDatabase.getInstance().getReference().child("classification_history");//also be used to fetch postdata
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        String strDate = formatter.format(date);
+        dog_image_storage_ref.child(useridGlobal).child(String.valueOf(i)).putFile(Photo_Uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+
+                if(task.isSuccessful()){
+                    try {
+
+
+                        dog_image_storage_ref.child(useridGlobal).child(String.valueOf(i)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                //first put hashmap then into database
+
+
+                                HashMap hashMap = new HashMap();
+
+                                hashMap.put("DogImageUri", uri.toString());
+                                hashMap.put("DogClass", ClassName);
+                                hashMap.put("Probability", percentage);
+
+                                classification_history_ref.child(useridGlobal).child(String.valueOf(i)).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                                    @Override
+                                    public void onComplete(@NonNull Task task) {
+                                        if (task.isSuccessful()) {
+
+                                            //Toast.makeText(classify.this, "Post Added", Toast.LENGTH_SHORT).show();
+
+
+                                        } else {
+                                            Toast.makeText(classify.this, "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+
+                            }
+                        });
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                else{
+
+                    Toast.makeText(classify.this, ""+task.getException().toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+
+
+        });
+    }
+
 
 
 }

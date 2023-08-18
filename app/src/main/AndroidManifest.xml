@@ -100,7 +100,7 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
         <activity
-            android:name=".ApiActivity"
+            android:name=".postAPI"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity

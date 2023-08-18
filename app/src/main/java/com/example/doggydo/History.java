@@ -33,7 +33,7 @@ public class History extends AppCompatActivity {
 
 
     long last,currentPage;
-    long first=2,f=1;
+    long first=2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +52,12 @@ public class History extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 if(snapshot.exists())
                 {
                     last= snapshot.child(useridGlobal).getChildrenCount();
                     //for first data
+                    long f=1;
                     if(snapshot.child(useridGlobal ).child(String.valueOf(f)).child("DogClass").exists()) {
                         classname = snapshot.child(useridGlobal).child(String.valueOf(f)).child("DogClass").getValue().toString();
                         prob = snapshot.child(useridGlobal).child(String.valueOf(f)).child("Probability").getValue().toString();

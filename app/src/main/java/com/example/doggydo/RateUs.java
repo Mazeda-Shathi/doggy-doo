@@ -59,7 +59,8 @@ public class RateUs extends AppCompatActivity {
 
                     String rate=snapshot.child("ratingpoint").getValue(String.class);
                     float r=Float.parseFloat(rate);
-                    submitButton.setEnabled(false);
+                    submitButton.setBackgroundColor(000000);
+                    Toast.makeText(RateUs.this, "You have already rated us", Toast.LENGTH_SHORT).show();
 
                 }
 
